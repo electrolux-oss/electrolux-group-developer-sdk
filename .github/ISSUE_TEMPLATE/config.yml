@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Report a bug with Electrolux Group developer SDK
+    url: https://github.com/repo-placeholder/issues
+    about: Please report issues with this SDK in our repository.
+  - name: I have a question or need support
+    url: https://developer.electrolux.one/documentation
+    about: Check our documentation for resources on getting help. If you still have questions, contact us at devportal@electrolux.com.

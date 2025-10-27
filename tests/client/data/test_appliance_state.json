@@ -1,0 +1,48 @@
+{
+  "applianceId": "999011524_00:94700001-443E07021CE1",
+  "connectionState": "connected",
+  "status": "enabled",
+  "properties": {
+    "reported": {
+      "temperatureRepresentation": "CELSIUS",
+      "displayLight": "DISPLAY_LIGHT_1",
+      "schedulerMode": "ON",
+      "targetTemperatureF": 71.6,
+      "targetTemperatureC": 22,
+      "schedulerEventCount": 2,
+      "dummy": {
+        "nested": {
+          "ambientTemperatureF": 64.4,
+          "ambientTemperatureC": 18
+        }
+      },
+      "mode": "OFF",
+      "fanSpeedSetting": "LOW",
+      "startTime": 52500,
+      "stopTime": -1,
+      "sleepMode": "OFF",
+      "cleanAirMode": "OFF",
+      "applianceInfo": {
+        "applianceType": "AC",
+        "capabilityHash": "f583effa7a4a955565995e668211e3efdb9c3ec311fee429ded40e42cde7ab1b"
+      },
+      "uiLockMode": false,
+      "cpv": "00",
+      "applianceState": "OFF",
+      "FilterState": "GOOD",
+      "alerts": [],
+      "ambientTemperatureF": 71.6,
+      "filterState": "GOOD",
+      "networkInterface": {
+        "linkQualityIndicator": "VERY_GOOD",
+        "otaState": "IDLE",
+        "swVersion": "v1.9.1_srac",
+        "swAncAndRevision": "S00006778A",
+        "niuSwUpdateCurrentDescription": "A16323311A-S00006778A"
+      },
+      "verticalSwing": "OFF",
+      "ambientTemperatureC": 22,
+      "connectivityState": "connected"
+    }
+  }
+}

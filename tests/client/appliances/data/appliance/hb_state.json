@@ -1,0 +1,82 @@
+{
+  "applianceId": "949597855_00:20240904-443E0732919D",
+  "properties": {
+    "desired": {},
+    "reported": {
+      "applianceInfo": {
+        "capabilityHash": "ecc77014ae687c3c987010215a14b17e47a5ae8136d32dd0a36b46debaf73100",
+        "applianceType": "HB"
+      },
+      "uiLockMode": false,
+      "remoteControl": "NOT_SAFETY_RELEVANT_ENABLED",
+      "cpv": "00",
+      "applianceState": "OFF",
+      "applianceMode": "NORMAL",
+      "hobHood": {
+        "hoodFilterCharcIndication": false,
+        "targetDuration": 0,
+        "hobToHoodState": "AUTO_SUSPEND",
+        "hobToHoodFanSpeed": "OFF",
+        "windowNotification": "NONE",
+        "hobToHoodMode": "H4",
+        "timeToEnd": -1
+      },
+      "alerts": [],
+      "networkInterface": {
+        "swVersion": "v3.0.0Src7_argo",
+        "otaState": "IDLE",
+        "linkQualityIndicator": "VERY_GOOD",
+        "niuSwUpdateCurrentDescription": "A23642201A-S00007644G",
+        "swAncAndRevision": "S00007644G"
+      },
+      "childLock": false,
+      "keySoundTone": "NONE",
+      "hobZone2": {
+        "hobBridgeMaster": false,
+        "residualHeatState": "NO",
+        "hobMaxPowerLevel": 253,
+        "heatingQualitativeLevel": 0,
+        "targetDuration": 0,
+        "reminderTime": -1,
+        "hobCoil": {},
+        "hobPotDetected": "NO_POT_IDLE"
+      },
+      "hobZone1": {
+        "hobBridgeMaster": false,
+        "residualHeatState": "NO",
+        "hobMaxPowerLevel": 253,
+        "heatingQualitativeLevel": 0,
+        "targetDuration": 0,
+        "reminderTime": -1,
+        "hobCoil": {},
+        "hobPotDetected": "NO_POT_IDLE",
+        "timeToEnd": -1
+      },
+      "hobZone4": {
+        "hobBridgeMaster": false,
+        "residualHeatState": "NO",
+        "hobMaxPowerLevel": 253,
+        "heatingQualitativeLevel": 0,
+        "targetDuration": 0,
+        "reminderTime": -1,
+        "hobCoil": {},
+        "hobPotDetected": "NO_POT_IDLE"
+      },
+      "hobZone3": {
+        "hobBridgeMaster": false,
+        "residualHeatState": "NO",
+        "hobMaxPowerLevel": 253,
+        "heatingQualitativeLevel": 0,
+        "targetDuration": 0,
+        "reminderTime": -1,
+        "hobCoil": {},
+        "hobPotDetected": "NO_POT_IDLE"
+      },
+      "connectivityState": "connected"
+    },
+    "metadataDesired": {},
+    "metadata": {}
+  },
+  "status": "enabled",
+  "connectionState": "connected"
+}

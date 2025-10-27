@@ -1,0 +1,89 @@
+{
+  "applianceId": "999008100_00:99010285-443E0735F335",
+  "connectionState": "connected",
+  "status": "enabled",
+  "properties": {
+    "reported": {
+      "hoodCharcFilterTimer": 0,
+      "humanCentricLightEventState": "OFF",
+      "tvocFilterTime": 918000,
+      "remoteControl": "ENABLED",
+      "humanCentricLightEventSettings": {
+        "0": {
+          "lightIntensityPrc": 62,
+          "startTimeMinutes": 0,
+          "lightColorPrc": 0,
+          "startTimeHour": 6
+        },
+        "1": {
+          "lightIntensityPrc": 100,
+          "startTimeMinutes": 0,
+          "lightColorPrc": 40,
+          "startTimeHour": 9
+        },
+        "2": {
+          "lightIntensityPrc": 100,
+          "startTimeMinutes": 0,
+          "lightColorPrc": 100,
+          "startTimeHour": 12
+        },
+        "3": {
+          "lightIntensityPrc": 100,
+          "startTimeMinutes": 0,
+          "lightColorPrc": 100,
+          "startTimeHour": 15
+        },
+        "4": {
+          "lightIntensityPrc": 100,
+          "startTimeMinutes": 0,
+          "lightColorPrc": 40,
+          "startTimeHour": 17
+        },
+        "5": {
+          "lightIntensityPrc": 81,
+          "startTimeMinutes": 0,
+          "lightColorPrc": 0,
+          "startTimeHour": 20
+        },
+        "6": {
+          "lightIntensityPrc": 62,
+          "startTimeMinutes": 0,
+          "lightColorPrc": 0,
+          "startTimeHour": 23
+        }
+      },
+      "hoodGreaseFilterTimer": 0,
+      "lightIntensity": 0,
+      "localTimeAutomaticMode": "MANUAL",
+      "soundVolume": 0,
+      "lightColorTemperature": 0,
+      "hoodFilterCharcIndication": false,
+      "targetDuration": 0,
+      "hoodAutoSwitchOffEvent": false,
+      "applianceInfo": {
+        "applianceType": "HD",
+        "capabilityHash": "6556f9ab8cb6970239b4f32444108ef28ac31f82fdea862128ea40b38bda81a9"
+      },
+      "hoodFilterCharcEnable": "OFF",
+      "hoodFanLevel": "OFF",
+      "cpv": "00",
+      "applianceMode": "NORMAL",
+      "applianceState": "OFF",
+      "drawerStatus": false,
+      "applianceLocalTimeOffset": -2147483648,
+      "alerts": [],
+      "networkInterface": {
+        "swVersion": "v4.0.0S_0tst",
+        "linkQualityIndicator": "EXCELLENT",
+        "otaState": "IDLE",
+        "autoLocalTimeOffset": 10800,
+        "niuSwUpdateCurrentDescription": "A23642205A-S00000TSTC",
+        "timeZoneDatabaseName": "Europe/Bucharest",
+        "swAncAndRevision": "S00000TSTC"
+      },
+      "hoodFilterGreaseIndication": "FALSE",
+      "connectivityState": "connected",
+      "timeToEnd": 0
+    }
+  }
+}

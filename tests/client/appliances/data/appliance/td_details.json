@@ -1,0 +1,2166 @@
+{
+  "applianceInfo": {
+    "serialNumber": "20700002",
+    "pnc": "999007094",
+    "brand": "AEG",
+    "deviceType": "TUMBLE_DRYER",
+    "model": "PerfectCare 900",
+    "variant": "EW9H778P9",
+    "colour": "WHITE"
+  },
+  "capabilities": {
+    "alerts": {
+      "access": "read",
+      "type": "alert",
+      "values": {
+        "CHECK_DOOR": {},
+        "CHECK_DRAIN_FILTER": {},
+        "CHECK_INLET_TAP": {},
+        "DETERGENT_OVERDOSING": {},
+        "DOOR": {},
+        "EMPTY_WATER_CONTAINER": {},
+        "MACHINE_RESTART": {},
+        "POWER_FAILURE": {},
+        "STEAM_TANK_EMPTY": {},
+        "STEAM_TANK_FULL": {},
+        "TOP_UP_SALT": {},
+        "UNBALANCED_LAUNDRY": {},
+        "UNSTABLE_SUPPLY_VOLTAGE": {},
+        "WATER_CONTAINER": {},
+        "WATER_LEAK": {}
+      }
+    },
+    "applianceCareAndMaintenance0": {
+      "access": "readwrite",
+      "type": "careMaintenance"
+    },
+    "applianceCareAndMaintenance0/maint1_ID": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint1_mng_by_cloud": {
+      "access": "readwrite",
+      "type": "boolean",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint1_occured": {
+      "access": "readwrite",
+      "type": "boolean",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint1_spare": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint1_threshold": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint2_ID": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint2_mng_by_cloud": {
+      "access": "readwrite",
+      "type": "boolean",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint2_occured": {
+      "access": "readwrite",
+      "type": "boolean",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint2_spare": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint2_threshold": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint3_ID": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint3_mng_by_cloud": {
+      "access": "readwrite",
+      "type": "boolean",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint3_occured": {
+      "access": "readwrite",
+      "type": "boolean",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint3_spare": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint3_threshold": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint4_ID": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint4_mng_by_cloud": {
+      "access": "readwrite",
+      "type": "boolean",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint4_occured": {
+      "access": "readwrite",
+      "type": "boolean",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint4_spare": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint4_threshold": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint5_ID": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint5_mng_by_cloud": {
+      "access": "readwrite",
+      "type": "boolean",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint5_occured": {
+      "access": "readwrite",
+      "type": "boolean",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint5_spare": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceCareAndMaintenance0/maint5_threshold": {
+      "access": "readwrite",
+      "type": "int",
+      "values": {}
+    },
+    "applianceFeatureFinishIn": {
+      "access": "constant",
+      "default": 1,
+      "type": "number"
+    },
+    "applianceMainBoardSwVersion": {
+      "access": "read",
+      "type": "string"
+    },
+    "applianceMode": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "DEMO": {},
+        "DIAGNOSTIC": {},
+        "NORMAL": {},
+        "SERVICE": {}
+      }
+    },
+    "applianceState": {
+      "access": "read",
+      "triggers": [
+        {
+          "action": {
+            "executeCommand": {
+              "access": "write",
+              "values": {
+                "PAUSE": {}
+              }
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": "RUNNING",
+            "operator": "eq"
+          }
+        },
+        {
+          "action": {
+            "executeCommand": {
+              "access": "write",
+              "values": {
+                "RESUME": {},
+                "STOPRESET": {}
+              }
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": "PAUSED",
+            "operator": "eq"
+          }
+        },
+        {
+          "action": {
+            "executeCommand": {
+              "access": "write",
+              "values": {
+                "STOPRESET": {}
+              }
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": "END_OF_CYCLE",
+            "operator": "eq"
+          }
+        },
+        {
+          "action": {
+            "executeCommand": {
+              "access": "write",
+              "values": {
+                "PAUSE": {}
+              }
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": "DELAYED_START",
+            "operator": "eq"
+          }
+        },
+        {
+          "action": {
+            "executeCommand": {
+              "access": "write",
+              "values": {
+                "START": {}
+              }
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": "READY_TO_START",
+            "operator": "eq"
+          }
+        },
+        {
+          "action": {
+            "endOfCycleSound": {
+              "access": "read"
+            },
+            "waterHardness": {
+              "access": "read"
+            }
+          },
+          "condition": {
+            "operand_1": {
+              "operand_1": "value",
+              "operand_2": "RUNNING",
+              "operator": "eq"
+            },
+            "operand_2": {
+              "operand_1": "value",
+              "operand_2": "DELAYED_START",
+              "operator": "eq"
+            },
+            "operator": "or"
+          }
+        },
+        {
+          "action": {
+            "endOfCycleSound": {
+              "access": "default"
+            },
+            "waterHardness": {
+              "access": "default"
+            }
+          },
+          "condition": {
+            "operand_1": {
+              "operand_1": "value",
+              "operand_2": "READY_TO_START",
+              "operator": "eq"
+            },
+            "operand_2": {
+              "operand_1": "value",
+              "operand_2": "IDLE",
+              "operator": "eq"
+            },
+            "operator": "or"
+          }
+        },
+        {
+          "action": {
+            "endOfCycleSound": {
+              "access": "read"
+            },
+            "waterHardness": {
+              "access": "read"
+            }
+          },
+          "condition": {
+            "operand_1": {
+              "operand_1": "value",
+              "operand_2": "PAUSED",
+              "operator": "eq"
+            },
+            "operand_2": {
+              "operand_1": "value",
+              "operand_2": "END_OF_CYCLE",
+              "operator": "eq"
+            },
+            "operator": "or"
+          }
+        },
+        {
+          "action": {
+            "executeCommand": {
+              "access": "write",
+              "values": {
+                "ON": {}
+              }
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": "IDLE",
+            "operator": "eq"
+          }
+        }
+      ],
+      "type": "string",
+      "values": {
+        "ALARM": {},
+        "DELAYED_START": {},
+        "END_OF_CYCLE": {},
+        "IDLE": {},
+        "OFF": {},
+        "PAUSED": {},
+        "READY_TO_START": {},
+        "RUNNING": {}
+      }
+    },
+    "applianceTotalWorkingTime": {
+      "access": "read",
+      "type": "number"
+    },
+    "applianceUiSwVersion": {
+      "access": "read",
+      "type": "string"
+    },
+    "clearCyclePersonalizationCmd": {
+      "access": "write",
+      "type": "number",
+      "values": {
+        "0": {}
+      }
+    },
+    "cycleMemory1": {
+      "access": "readwrite",
+      "reference": "userSelections",
+      "type": "complex"
+    },
+    "cycleMemory2": {
+      "access": "readwrite",
+      "reference": "userSelections",
+      "type": "complex"
+    },
+    "cycleMemory3": {
+      "access": "readwrite",
+      "reference": "userSelections",
+      "type": "complex"
+    },
+    "cyclePersonalization": {
+      "access": "read",
+      "type": "complex"
+    },
+    "cyclePersonalization/antiCreaseValue": {
+      "access": "readwrite",
+      "default": 30,
+      "max": 120,
+      "min": 30,
+      "step": 30,
+      "type": "number"
+    },
+    "cyclePersonalization/dryingTime": {
+      "access": "readwrite",
+      "default": 0,
+      "max": 120,
+      "min": 0,
+      "step": 10,
+      "type": "number"
+    },
+    "cyclePersonalization/drynessValue": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "MAXIMUM": {},
+        "MEDIUM": {},
+        "MINIMUM": {},
+        "UNDEFINED": {
+          "disabled": true
+        }
+      }
+    },
+    "cyclePersonalization/humidityTarget": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "CUPBOARD": {},
+        "EXTRA": {},
+        "IRON": {},
+        "UNDEFINED": {
+          "disabled": true
+        }
+      }
+    },
+    "cyclePersonalization/programUID": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "AUTO_EASY_IRON_PR_EASYIRON_TD": {},
+        "BABY_PR_BABY": {},
+        "BED_LINEN_PLUS_PR_BEDLINENPLUSITA": {},
+        "COTTON_PR_COTTONS": {},
+        "COTTON_PR_COTTONSECO": {},
+        "CURTAINS_PR_CURTAINS": {},
+        "DOWN_JACKET_PR_DOWN_JACKET": {},
+        "DRY_CLEANING_PR_REFRESH": {},
+        "DUVET_PR_DUVET": {},
+        "EXTRA_DELICATE_PR_DELICATES": {},
+        "HYGIENE_PR_HYGIENE": {},
+        "JEANS_PR_DENIM": {},
+        "LINEN_PR_LINEN": {},
+        "MACHINE_SETTINGS_HIDDEN_TEST": {
+          "disabled": true
+        },
+        "MY_DRY_PR_MIXDRY": {},
+        "NA_ALLERGEN_PR_ALLERGEN": {},
+        "OUTD_PROOF_PR_OUTDOOR": {},
+        "PETBED_PR_PETHAIR": {},
+        "PILLOWS_PR_PILLOW": {},
+        "QUICK_PR_QUICK_3KG": {},
+        "SHOES_PR_RUNNINGSHOES": {},
+        "SILK_DRY_PR_SILK": {},
+        "SKIING_PR_SKIINGGEAR": {},
+        "SOCCER_RUGBY_PR_SOCCER_RUGBY": {},
+        "SPORTWEAR_PR_SPORTWEAR": {},
+        "SYNTHETIC_PR_SYNTHETICS": {},
+        "TIMEDRY_PR_DRYINGRACK": {},
+        "TOWELS_PR_TOWELS": {},
+        "TRAINING_GEAR_PR_DAILYTRAINING": {},
+        "WOOL_GOLD_PR_WOOL": {}
+      }
+    },
+    "cyclePersonalization/tDEconomy_Eco": {
+      "access": "readwrite",
+      "type": "boolean"
+    },
+    "cyclePersonalization/tDEconomy_Night": {
+      "access": "readwrite",
+      "type": "boolean"
+    },
+    "cyclePhase": {
+      "access": "read",
+      "triggers": [
+        {
+          "action": {
+            "executeCommand": {
+              "access": "write",
+              "values": {
+                "STOPRESET": {}
+              }
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": "ANTICREASE",
+            "operator": "eq"
+          }
+        }
+      ],
+      "type": "string",
+      "values": {
+        "ANTICREASE": {},
+        "COOL": {},
+        "CYCLE_PHASE_HIDDEN": {
+          "disabled": true
+        },
+        "DRY": {},
+        "UNAVAILABLE": {}
+      }
+    },
+    "doorState": {
+      "access": "read",
+      "type": "string",
+      "values": {
+        "CLOSED": {},
+        "OPEN": {}
+      }
+    },
+    "dryingNominalLoadWeight": {
+      "access": "read",
+      "max": 20000,
+      "min": 0,
+      "type": "number",
+      "values": {
+        "NOT_AVAILABLE": {
+          "disabled": true
+        }
+      }
+    },
+    "dwywDataToDryer": {
+      "access": "write",
+      "type": "complex"
+    },
+    "dwywDataToDryer/programUID": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "AUTO_EASY_IRON_PR_EASYIRON_TD": {},
+        "BABY_PR_BABY": {},
+        "BED_LINEN_PLUS_PR_BEDLINENPLUSITA": {},
+        "COTTON_PR_COTTONS": {},
+        "COTTON_PR_COTTONSECO": {},
+        "CURTAINS_PR_CURTAINS": {},
+        "DOWN_JACKET_PR_DOWN_JACKET": {},
+        "DRY_CLEANING_PR_REFRESH": {},
+        "DUVET_PR_DUVET": {},
+        "EXTRA_DELICATE_PR_DELICATES": {},
+        "HYGIENE_PR_HYGIENE": {},
+        "JEANS_PR_DENIM": {},
+        "LINEN_PR_LINEN": {},
+        "MACHINE_SETTINGS_HIDDEN_TEST": {
+          "disabled": true
+        },
+        "MY_DRY_PR_MIXDRY": {},
+        "NA_ALLERGEN_PR_ALLERGEN": {},
+        "OUTD_PROOF_PR_OUTDOOR": {},
+        "PETBED_PR_PETHAIR": {},
+        "PILLOWS_PR_PILLOW": {},
+        "QUICK_PR_QUICK_3KG": {},
+        "SHOES_PR_RUNNINGSHOES": {},
+        "SILK_DRY_PR_SILK": {},
+        "SKIING_PR_SKIINGGEAR": {},
+        "SOCCER_RUGBY_PR_SOCCER_RUGBY": {},
+        "SPORTWEAR_PR_SPORTWEAR": {},
+        "SYNTHETIC_PR_SYNTHETICS": {},
+        "TIMEDRY_PR_DRYINGRACK": {},
+        "TOWELS_PR_TOWELS": {},
+        "TRAINING_GEAR_PR_DAILYTRAINING": {},
+        "WOOL_GOLD_PR_WOOL": {}
+      }
+    },
+    "dwywDataToDryer/tdCloudTte": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywDataToDryer/tdEcpOverload": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywDataToDryer/wmLoadError": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywDataToDryer/wmLoadMoisture": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywDataToDryer/wmLoadWeight": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywInfo": {
+      "access": "read",
+      "type": "container"
+    },
+    "dwywInfo/state": {
+      "access": "read",
+      "default": "OFF",
+      "type": "string",
+      "values": {
+        "DATA_NOT_RECEIVED": {},
+        "DATA_RECEIVED": {},
+        "OFF": {},
+        "WAITING_FROM_CLOUD": {}
+      }
+    },
+    "dwywInfo/wmSn": {
+      "access": "read",
+      "default": "0",
+      "type": "string"
+    },
+    "dwywSelect": {
+      "access": "readwrite",
+      "type": "container"
+    },
+    "dwywSelect/command": {
+      "access": "readwrite",
+      "default": "KEY_ERROR",
+      "type": "string",
+      "values": {
+        "KEY_ERROR": {
+          "disabled": true
+        }
+      }
+    },
+    "dwywSelect/wmSn": {
+      "access": "readwrite",
+      "default": "0",
+      "type": "string"
+    },
+    "dwywTdTteParameters": {
+      "access": "read",
+      "type": "map",
+      "values": {
+        "AUTO_EASY_IRON_PR_EASYIRON_TD": {},
+        "BABY_PR_BABY": {},
+        "BED_LINEN_PLUS_PR_BEDLINENPLUSITA": {},
+        "COTTON_PR_COTTONS": {},
+        "COTTON_PR_COTTONSECO": {},
+        "CURTAINS_PR_CURTAINS": {},
+        "DOWN_JACKET_PR_DOWN_JACKET": {},
+        "DRY_CLEANING_PR_REFRESH": {},
+        "DUVET_PR_DUVET": {},
+        "EXTRA_DELICATE_PR_DELICATES": {},
+        "HYGIENE_PR_HYGIENE": {},
+        "JEANS_PR_DENIM": {},
+        "LINEN_PR_LINEN": {},
+        "MACHINE_SETTINGS_HIDDEN_TEST": {},
+        "MY_DRY_PR_MIXDRY": {},
+        "NA_ALLERGEN_PR_ALLERGEN": {},
+        "OUTD_PROOF_PR_OUTDOOR": {},
+        "PETBED_PR_PETHAIR": {},
+        "PILLOWS_PR_PILLOW": {},
+        "QUICK_PR_QUICK_3KG": {},
+        "SHOES_PR_RUNNINGSHOES": {},
+        "SILK_DRY_PR_SILK": {},
+        "SKIING_PR_SKIINGGEAR": {},
+        "SOCCER_RUGBY_PR_SOCCER_RUGBY": {},
+        "SPORTWEAR_PR_SPORTWEAR": {},
+        "SYNTHETIC_PR_SYNTHETICS": {},
+        "TIMEDRY_PR_DRYINGRACK": {},
+        "TOWELS_PR_TOWELS": {},
+        "TRAINING_GEAR_PR_DAILYTRAINING": {},
+        "WOOL_GOLD_PR_WOOL": {}
+      }
+    },
+    "dwywTdTteParameters/conductPerc": {
+      "access": "read",
+      "max": 100,
+      "min": 0,
+      "type": "number"
+    },
+    "dwywTdTteParameters/progIndex": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/programUID": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "AUTO_EASY_IRON_PR_EASYIRON_TD": {},
+        "BABY_PR_BABY": {},
+        "BED_LINEN_PLUS_PR_BEDLINENPLUSITA": {},
+        "COTTON_PR_COTTONS": {},
+        "COTTON_PR_COTTONSECO": {},
+        "CURTAINS_PR_CURTAINS": {},
+        "DOWN_JACKET_PR_DOWN_JACKET": {},
+        "DRY_CLEANING_PR_REFRESH": {},
+        "DUVET_PR_DUVET": {},
+        "EXTRA_DELICATE_PR_DELICATES": {},
+        "HYGIENE_PR_HYGIENE": {},
+        "JEANS_PR_DENIM": {},
+        "LINEN_PR_LINEN": {},
+        "MACHINE_SETTINGS_HIDDEN_TEST": {
+          "disabled": true
+        },
+        "MY_DRY_PR_MIXDRY": {},
+        "NA_ALLERGEN_PR_ALLERGEN": {},
+        "OUTD_PROOF_PR_OUTDOOR": {},
+        "PETBED_PR_PETHAIR": {},
+        "PILLOWS_PR_PILLOW": {},
+        "QUICK_PR_QUICK_3KG": {},
+        "SHOES_PR_RUNNINGSHOES": {},
+        "SILK_DRY_PR_SILK": {},
+        "SKIING_PR_SKIINGGEAR": {},
+        "SOCCER_RUGBY_PR_SOCCER_RUGBY": {},
+        "SPORTWEAR_PR_SPORTWEAR": {},
+        "SYNTHETIC_PR_SYNTHETICS": {},
+        "TIMEDRY_PR_DRYINGRACK": {},
+        "TOWELS_PR_TOWELS": {},
+        "TRAINING_GEAR_PR_DAILYTRAINING": {},
+        "WOOL_GOLD_PR_WOOL": {}
+      }
+    },
+    "dwywTdTteParameters/tdNomWeight": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/tteAlgoType": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/tteDefault": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/tteFixed": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/ttePHighLim": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/ttePK1": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/ttePK2": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/ttePK3": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/ttePLowLim": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/ttePOvldCf": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/ttePSpare1": {
+      "access": "read",
+      "type": "number"
+    },
+    "dwywTdTteParameters/ttePSpare2": {
+      "access": "read",
+      "type": "number"
+    },
+    "endOfCycleSound": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "NO_SOUND": {},
+        "SHORT_SOUND": {}
+      }
+    },
+    "executeCommand": {
+      "access": "write",
+      "type": "string",
+      "values": {
+        "OFF": {},
+        "ON": {},
+        "PAUSE": {},
+        "RESUME": {},
+        "START": {},
+        "STOPRESET": {}
+      }
+    },
+    "fCMiscellaneousState": {
+      "access": "read",
+      "type": "complex"
+    },
+    "fCMiscellaneousState/ecoLevel": {
+      "access": "read",
+      "type": "number",
+      "values": {
+        "5": {},
+        "6": {}
+      }
+    },
+    "fCMiscellaneousState/optisenseResult": {
+      "access": "read",
+      "type": "number"
+    },
+    "fcOptisenseLoadWeight": {
+      "access": "read",
+      "type": "number",
+      "values": {
+        "65408": {},
+        "65409": {},
+        "65410": {},
+        "65411": {},
+        "65412": {},
+        "65532": {},
+        "NOT_AVAILABLE": {
+          "disabled": true
+        },
+        "OVERLOAD": {}
+      }
+    },
+    "minFinishInTime": {
+      "access": "read",
+      "type": "number",
+      "values": {
+        "INVALID_OR_NOT_SET_TIME": {}
+      }
+    },
+    "miscellaneous": {
+      "access": "readwrite",
+      "type": "complex"
+    },
+    "networkInterface": {
+      "command": {
+        "access": "write",
+        "type": "string",
+        "values": {
+          "APPLIANCE_AUTHORIZE": {},
+          "START": {},
+          "USER_AUTHORIZE": {},
+          "USER_NOT_AUTHORIZE": {}
+        }
+      },
+      "linkQualityIndicator": {
+        "access": "read",
+        "type": "string",
+        "values": {
+          "EXCELLENT": {},
+          "GOOD": {},
+          "POOR": {},
+          "UNDEFINED": {},
+          "VERY_GOOD": {},
+          "VERY_POOR": {}
+        }
+      },
+      "niuSwUpdateCurrentDescription": {
+        "access": "read",
+        "type": "string"
+      },
+      "otaState": {
+        "access": "read",
+        "type": "string",
+        "values": {
+          "DESCRIPTION_AVAILABLE": {},
+          "DESCRIPTION_DOWNLOADING": {},
+          "DESCRIPTION_READY": {},
+          "FW_DOWNLOADING": {},
+          "FW_DOWNLOAD_START": {},
+          "FW_SIGNATURE_CHECK": {},
+          "FW_UPDATE_IN_PROGRESS": {},
+          "IDLE": {},
+          "READY_TO_UPDATE": {},
+          "UPDATE_ABORT": {},
+          "UPDATE_CHECK": {},
+          "UPDATE_ERROR": {},
+          "UPDATE_OK": {},
+          "WAITINGFORAUTHORIZATION": {}
+        }
+      },
+      "startUpCommand": {
+        "access": "write",
+        "type": "string",
+        "values": {
+          "UNINSTALL": {}
+        }
+      },
+      "swAncAndRevision": {
+        "access": "read",
+        "type": "string"
+      },
+      "swVersion": {
+        "access": "read",
+        "type": "string"
+      }
+    },
+    "networkInterfaceAlwaysOn": {
+      "access": "readwrite",
+      "default": "OFF",
+      "type": "string",
+      "values": {
+        "OFF": {},
+        "ON": {}
+      }
+    },
+    "remoteControl": {
+      "access": "read",
+      "triggers": [
+        {
+          "action": {
+            "executeCommand": {
+              "disabled": false
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": "ENABLED",
+            "operator": "eq"
+          }
+        },
+        {
+          "action": {
+            "executeCommand": {
+              "disabled": true
+            }
+          },
+          "condition": {
+            "operand_1": {
+              "operand_1": "value",
+              "operand_2": "NOT_SAFETY_RELEVANT_ENABLED",
+              "operator": "eq"
+            },
+            "operand_2": {
+              "operand_1": "value",
+              "operand_2": "DISABLED",
+              "operator": "eq"
+            },
+            "operator": "or"
+          }
+        }
+      ],
+      "type": "string",
+      "values": {
+        "DISABLED": {},
+        "ENABLED": {},
+        "NOT_SAFETY_RELEVANT_ENABLED": {},
+        "TEMPORARY_LOCKED": {}
+      }
+    },
+    "remoteNotificationPending": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "OFF": {
+          "disabled": true
+        },
+        "ON": {
+          "disabled": true
+        }
+      }
+    },
+    "stopTime": {
+      "access": "readwrite",
+      "default": -1,
+      "max": 86400,
+      "min": 0,
+      "step": 3600,
+      "type": "number",
+      "values": {
+        "-1": {}
+      }
+    },
+    "timeToEnd": {
+      "access": "read",
+      "type": "number"
+    },
+    "totalCycleCounter": {
+      "access": "read",
+      "type": "number"
+    },
+    "uiLockMode": {
+      "access": "readwrite",
+      "type": "boolean"
+    },
+    "userSelections": {
+      "access": "readwrite",
+      "type": "complex"
+    },
+    "userSelections/antiCreaseValue": {
+      "access": "readwrite",
+      "default": 30,
+      "max": 120,
+      "min": 30,
+      "step": 30,
+      "type": "number"
+    },
+    "userSelections/dryingTime": {
+      "access": "readwrite",
+      "default": 0,
+      "max": 120,
+      "min": 0,
+      "step": 10,
+      "triggers": [
+        {
+          "action": {
+            "userSelections/humidityTarget": {
+              "default": "UNDEFINED"
+            },
+            "userSelections/tDEconomy_Eco": {
+              "access": "read",
+              "default": true,
+              "disabled": true
+            },
+            "userSelections/tDEconomy_Night": {
+              "access": "read",
+              "default": false,
+              "disabled": true
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": 0,
+            "operator": "ne"
+          }
+        },
+        {
+          "action": {
+            "userSelections/tDEconomy_Eco": {
+              "access": "default",
+              "disabled": true
+            },
+            "userSelections/tDEconomy_Night": {
+              "access": "default",
+              "disabled": false
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": 0,
+            "operator": "eq"
+          }
+        }
+      ],
+      "type": "number"
+    },
+    "userSelections/drynessValue": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "MAXIMUM": {},
+        "MEDIUM": {},
+        "MINIMUM": {},
+        "UNDEFINED": {
+          "disabled": true
+        }
+      }
+    },
+    "userSelections/humidityTarget": {
+      "access": "readwrite",
+      "triggers": [
+        {
+          "action": {
+            "userSelections/dryingTime": {
+              "default": 0
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": "UNDEFINED",
+            "operator": "ne"
+          }
+        },
+        {
+          "action": {
+            "userSelections/tDEconomy_Night": {
+              "default": false
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": "IRON",
+            "operator": "eq"
+          }
+        }
+      ],
+      "type": "string",
+      "values": {
+        "CUPBOARD": {},
+        "EXTRA": {},
+        "IRON": {},
+        "UNDEFINED": {
+          "disabled": true
+        }
+      }
+    },
+    "userSelections/memoryId": {
+      "access": "readwrite",
+      "type": "number",
+      "values": {
+        "10": {},
+        "20": {},
+        "30": {}
+      }
+    },
+    "userSelections/programUID": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "AUTO_EASY_IRON_PR_EASYIRON_TD": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "IRON",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {},
+              "IRON": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "BABY_PR_BABY": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "EXTRA",
+            "disabled": false,
+            "values": {
+              "EXTRA": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "BED_LINEN_PLUS_PR_BEDLINENPLUSITA": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/dryingTime": {
+            "access": "readwrite",
+            "default": 0,
+            "disabled": false,
+            "max": 120,
+            "min": 0,
+            "step": 10
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {},
+              "EXTRA": {},
+              "IRON": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "COTTON_PR_COTTONS": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/dryingTime": {
+            "access": "readwrite",
+            "default": 0,
+            "disabled": false,
+            "max": 120,
+            "min": 0,
+            "step": 10
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {},
+              "EXTRA": {},
+              "IRON": {},
+              "UNDEFINED": {
+                "disabled": true
+              }
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "readwrite",
+            "default": true,
+            "disabled": true
+          },
+          "userSelections/tDEconomy_Night": {
+            "access": "readwrite",
+            "default": false,
+            "disabled": false
+          }
+        },
+        "COTTON_PR_COTTONSECO": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {},
+              "IRON": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "CURTAINS_PR_CURTAINS": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "IRON",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {},
+              "IRON": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "DOWN_JACKET_PR_DOWN_JACKET": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {},
+              "EXTRA": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "DRY_CLEANING_PR_REFRESH": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "readwrite",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "DUVET_PR_DUVET": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "EXTRA_DELICATE_PR_DELICATES": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "HYGIENE_PR_HYGIENE": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "EXTRA",
+            "disabled": false,
+            "values": {
+              "EXTRA": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "JEANS_PR_DENIM": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {},
+              "EXTRA": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "LINEN_PR_LINEN": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "MACHINE_SETTINGS_HIDDEN_TEST": {
+          "disabled": true
+        },
+        "MY_DRY_PR_MIXDRY": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/dryingTime": {
+            "access": "readwrite",
+            "default": 0,
+            "disabled": false,
+            "max": 120,
+            "min": 0,
+            "step": 10
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {},
+              "EXTRA": {},
+              "UNDEFINED": {
+                "disabled": true
+              }
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "readwrite",
+            "default": true,
+            "disabled": true
+          },
+          "userSelections/tDEconomy_Night": {
+            "access": "readwrite",
+            "default": false,
+            "disabled": false
+          }
+        },
+        "NA_ALLERGEN_PR_ALLERGEN": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "EXTRA",
+            "disabled": false,
+            "values": {
+              "EXTRA": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "OUTD_PROOF_PR_OUTDOOR": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "PETBED_PR_PETHAIR": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "PILLOWS_PR_PILLOW": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "QUICK_PR_QUICK_3KG": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "readwrite",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "SHOES_PR_RUNNINGSHOES": {
+          "userSelections/drynessValue": {
+            "access": "readwrite",
+            "default": "MEDIUM",
+            "disabled": false,
+            "values": {
+              "MAXIMUM": {},
+              "MEDIUM": {},
+              "MINIMUM": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "SILK_DRY_PR_SILK": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "SKIING_PR_SKIINGGEAR": {
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "SOCCER_RUGBY_PR_SOCCER_RUGBY": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "SPORTWEAR_PR_SPORTWEAR": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "SYNTHETIC_PR_SYNTHETICS": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/dryingTime": {
+            "access": "readwrite",
+            "default": 0,
+            "disabled": false,
+            "max": 120,
+            "min": 0,
+            "step": 10
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {},
+              "EXTRA": {},
+              "IRON": {},
+              "UNDEFINED": {
+                "disabled": true
+              }
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "readwrite",
+            "default": true,
+            "disabled": true
+          },
+          "userSelections/tDEconomy_Night": {
+            "access": "readwrite",
+            "default": false,
+            "disabled": false
+          }
+        },
+        "TIMEDRY_PR_DRYINGRACK": {
+          "userSelections/dryingTime": {
+            "access": "readwrite",
+            "default": 10,
+            "disabled": false,
+            "max": 120,
+            "min": 10,
+            "step": 10
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "TOWELS_PR_TOWELS": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "TRAINING_GEAR_PR_DAILYTRAINING": {
+          "userSelections/antiCreaseValue": {
+            "access": "readwrite",
+            "default": 30,
+            "disabled": false,
+            "max": 120,
+            "min": 30,
+            "step": 30
+          },
+          "userSelections/humidityTarget": {
+            "access": "readwrite",
+            "default": "CUPBOARD",
+            "disabled": false,
+            "values": {
+              "CUPBOARD": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        },
+        "WOOL_GOLD_PR_WOOL": {
+          "userSelections/drynessValue": {
+            "access": "readwrite",
+            "default": "MEDIUM",
+            "disabled": false,
+            "values": {
+              "MAXIMUM": {},
+              "MEDIUM": {},
+              "MINIMUM": {}
+            }
+          },
+          "userSelections/memoryId": {
+            "access": "readwrite",
+            "disabled": true,
+            "values": {
+              "10": {},
+              "20": {},
+              "30": {}
+            }
+          },
+          "userSelections/tDEconomy_Eco": {
+            "access": "read",
+            "default": true,
+            "disabled": true
+          }
+        }
+      }
+    },
+    "userSelections/programsOrder": {
+      "items": [
+        "MACHINE_SETTINGS_HIDDEN_TEST",
+        "MY_DRY_PR_MIXDRY",
+        "COTTON_PR_COTTONSECO",
+        "COTTON_PR_COTTONS",
+        "SYNTHETIC_PR_SYNTHETICS",
+        "EXTRA_DELICATE_PR_DELICATES",
+        "WOOL_GOLD_PR_WOOL",
+        "QUICK_PR_QUICK_3KG",
+        "BED_LINEN_PLUS_PR_BEDLINENPLUSITA",
+        "OUTD_PROOF_PR_OUTDOOR",
+        "HYGIENE_PR_HYGIENE",
+        "DUVET_PR_DUVET",
+        "DOWN_JACKET_PR_DOWN_JACKET",
+        "SPORTWEAR_PR_SPORTWEAR",
+        "TRAINING_GEAR_PR_DAILYTRAINING",
+        "SOCCER_RUGBY_PR_SOCCER_RUGBY",
+        "SKIING_PR_SKIINGGEAR",
+        "SHOES_PR_RUNNINGSHOES",
+        "CURTAINS_PR_CURTAINS",
+        "PILLOWS_PR_PILLOW",
+        "TOWELS_PR_TOWELS",
+        "PETBED_PR_PETHAIR",
+        "AUTO_EASY_IRON_PR_EASYIRON_TD",
+        "NA_ALLERGEN_PR_ALLERGEN",
+        "JEANS_PR_DENIM",
+        "SILK_DRY_PR_SILK",
+        "BABY_PR_BABY",
+        "LINEN_PR_LINEN",
+        "DRY_CLEANING_PR_REFRESH",
+        "TIMEDRY_PR_DRYINGRACK"
+      ]
+    },
+    "userSelections/tDEconomy_Eco": {
+      "access": "readwrite",
+      "triggers": [
+        {
+          "action": {
+            "userSelections/tDEconomy_Night": {
+              "default": false
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": true,
+            "operator": "eq"
+          }
+        },
+        {
+          "action": {
+            "userSelections/tDEconomy_Night": {
+              "default": true
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": false,
+            "operator": "eq"
+          }
+        }
+      ],
+      "type": "boolean"
+    },
+    "userSelections/tDEconomy_Night": {
+      "access": "readwrite",
+      "triggers": [
+        {
+          "action": {
+            "userSelections/tDEconomy_Eco": {
+              "default": false
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": true,
+            "operator": "eq"
+          }
+        },
+        {
+          "action": {
+            "userSelections/tDEconomy_Eco": {
+              "default": true
+            }
+          },
+          "condition": {
+            "operand_1": "value",
+            "operand_2": false,
+            "operator": "eq"
+          }
+        }
+      ],
+      "type": "boolean"
+    },
+    "waterHardness": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "HARD": {},
+        "MEDIUM": {},
+        "SOFT": {}
+      }
+    }
+  }
+}

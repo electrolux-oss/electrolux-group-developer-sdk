@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Home",
+    "id": "1717498266",
+    "currentMap": true,
+    "rooms": [
+      {
+        "name": "Storage",
+        "id": "11"
+      },
+      {
+        "name": "Kitchen",
+        "id": "10"
+      },
+      {
+        "name": "Living room",
+        "id": "13"
+      },
+      {
+        "name": "TV room",
+        "id": "14"
+      },
+      {
+        "name": "Bedroom",
+        "id": "12"
+      }
+    ]
+  },
+  {
+    "name": "Holiday Home",
+    "id": "1746439962",
+    "currentMap": false,
+    "rooms": [
+      {
+        "name": "Kitchen",
+        "id": "10"
+      },
+      {
+        "name": "Bedroom",
+        "id": "11"
+      }
+    ]
+  },
+  {
+    "name": null,
+    "id": "17464399234",
+    "currentMap": false,
+    "rooms": null
+  }
+]

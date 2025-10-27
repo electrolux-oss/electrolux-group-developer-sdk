@@ -1,0 +1,100 @@
+[
+    {
+        "name": "Home",
+        "id": "e9de80d2-5862-44d4-be70-8486d874dbd5",
+        "timestamp": "2023-12-20T14:10:43Z",
+        "rotation": 0.0,
+        "zones": [
+            {
+                "name": "Kitchen",
+                "id": "7e0b1252-0d7d-4c81-b831-984fefb12b62",
+                "zoneType": "clean",
+                "vertices": [
+                    {
+                        "x": -4.45282,
+                        "y": -2.9271674
+                    },
+                    {
+                        "x": -4.5473814,
+                        "y": 0.77904105
+                    },
+                    {
+                        "x": -1.3173877,
+                        "y": 0.6950217
+                    },
+                    {
+                        "x": -2.82782,
+                        "y": -2.9271674
+                    }
+                ],
+                "roomCategory": 0,
+                "powerMode": 2
+            },
+            {
+                "name": "Bathroom ",
+                "id": "4c6177f5-5a87-4cd6-95e3-f36f0e1815d4",
+                "zoneType": "avoid",
+                "vertices": [
+                    {
+                        "x": -1.2866896,
+                        "y": -3.3479123
+                    },
+                    {
+                        "x": -1.2866887,
+                        "y": -1.4205184
+                    },
+                    {
+                        "x": 0.3383102,
+                        "y": -1.4205184
+                    },
+                    {
+                        "x": 0.3383102,
+                        "y": -3.3479123
+                    }
+                ],
+                "roomCategory": 0,
+                "powerMode": 0
+            }
+        ]
+    },
+    {
+        "name": "Holiday Home",
+        "rotation": 0.0,
+        "id": "659aa0db-538b-4006-aebb-266da534661c",
+        "timestamp": "2024-05-21T08:03:49Z",
+        "zones": [
+            {
+                "name": "Dining room",
+                "id": "788a00ee-7406-43e7-8253-1dace96be3e8",
+                "zoneType": "clean",
+                "vertices": [
+                    {
+                        "x": -2.6416667,
+                        "y": 2.108333
+                    },
+                    {
+                        "x": -2.6416683,
+                        "y": 7.677416
+                    },
+                    {
+                        "x": 0.60643977,
+                        "y": 7.592975
+                    },
+                    {
+                        "x": 0.44166645,
+                        "y": 2.108333
+                    }
+                ],
+                "roomCategory": 1,
+                "powerMode": 2
+            }
+        ]
+    },
+    {
+        "name": null,
+        "rotation": 0.0,
+        "id": "659aa0db-538b-4006-aebb-266da534661c",
+        "timestamp": "2024-05-21T08:03:49Z",
+        "zones":null
+    }
+]

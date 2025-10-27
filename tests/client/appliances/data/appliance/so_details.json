@@ -1,0 +1,1616 @@
+{
+  "applianceInfo": {
+    "serialNumber": "_00:8340",
+    "pnc": "948930000",
+    "brand": "ELECTROLUX",
+    "deviceType": "DOUBLE_WALL_OVEN",
+    "model": "ECWD3011AS",
+    "variant": "AIR SOUS VIDE",
+    "colour": "STAINLESS STEEL WITH ANTIFINGE"
+  },
+  "capabilities": {
+    "bottomOven": {
+      "applianceState": {
+        "access": "read",
+        "triggers": [
+          {
+            "action": {
+              "bottomOven/executeCommand": {
+                "access": "write",
+                "values": {
+                  "STOPRESET": {}
+                }
+              }
+            },
+            "condition": {
+              "operand_1": "bottomOven/applianceState",
+              "operand_2": "RUNNING",
+              "operator": "eq"
+            }
+          },
+          {
+            "action": {
+              "bottomOven/executeCommand": {
+                "access": "write",
+                "values": {
+                  "START": {}
+                }
+              }
+            },
+            "condition": {
+              "operand_1": "bottomOven/applianceState",
+              "operand_2": "READY_TO_START",
+              "operator": "eq"
+            }
+          },
+          {
+            "action": {
+              "bottomOven/executeCommand": {
+                "access": "write",
+                "values": {
+                  "START": {}
+                }
+              }
+            },
+            "condition": {
+              "operand_1": "bottomOven/applianceState",
+              "operand_2": "IDLE",
+              "operator": "eq"
+            }
+          },
+          {
+            "action": {
+              "bottomOven/executeCommand": {
+                "access": "readwrite",
+                "disabled": false
+              }
+            },
+            "condition": {
+              "operand_1": "bottomOven/applianceState",
+              "operand_2": "END_OF_CYCLE",
+              "operator": "eq"
+            }
+          }
+        ],
+        "type": "string",
+        "values": {
+          "ALARM": {},
+          "DELAYED_START": {},
+          "END_OF_CYCLE": {},
+          "IDLE": {},
+          "READY_TO_START": {},
+          "RUNNING": {}
+        }
+      },
+      "cavityLight": {
+        "access": "readwrite",
+        "type": "boolean",
+        "values": {
+          "OFF": {},
+          "ON": {}
+        }
+      },
+      "displayFoodProbeTemperatureC": {
+        "access": "read",
+        "type": "temperature"
+      },
+      "displayFoodProbeTemperatureF": {
+        "access": "read",
+        "type": "temperature"
+      },
+      "displayTemperatureC": {
+        "access": "read",
+        "type": "temperature"
+      },
+      "displayTemperatureF": {
+        "access": "read",
+        "type": "temperature"
+      },
+      "doorState": {
+        "access": "read",
+        "type": "string",
+        "values": {
+          "CLOSED": {},
+          "OPEN": {}
+        }
+      },
+      "executeCommand": {
+        "access": "write",
+        "type": "string",
+        "values": {
+          "START": {},
+          "STOPRESET": {}
+        }
+      },
+      "foodProbeInsertionState": {
+        "access": "read",
+        "type": "string",
+        "values": {
+          "INSERTED": {},
+          "NOT_INSERTED": {}
+        }
+      },
+      "program": {
+        "access": "readwrite",
+        "type": "string",
+        "values": {
+          "AIR_FRY": {
+            "bottomOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetFoodProbeTemperatureC": {
+              "access": "readwrite",
+              "default": 218.33,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetFoodProbeTemperatureF": {
+              "access": "readwrite",
+              "default": 425.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 218.33,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 425.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "BAKE": {
+            "bottomOven/startTime": {
+              "access": "readwrite",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "BREAD_PROOF": {
+            "bottomOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "read",
+              "default": 37.78,
+              "disabled": false,
+              "max": 37.78,
+              "min": 37.78,
+              "step": 0.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "read",
+              "default": 100.0,
+              "disabled": false,
+              "max": 100.0,
+              "min": 100.0,
+              "step": 0.0,
+              "type": "temperature"
+            },
+            "disabled": true
+          },
+          "BROIL": {
+            "bottomOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "read",
+              "default": 287.78,
+              "disabled": false,
+              "max": 287.78,
+              "min": 204.44,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "read",
+              "default": 550.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 400.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "disabled": true
+          },
+          "CONVENTIONAL_BAKE": {
+            "bottomOven/startTime": {
+              "access": "readwrite",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 162.78,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 325.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "CONVENTIONAL_ROAST": {
+            "bottomOven/startTime": {
+              "access": "readwrite",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetFoodProbeTemperatureC": {
+              "access": "readwrite",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetFoodProbeTemperatureF": {
+              "access": "readwrite",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "DEHYDRATE": {
+            "bottomOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "read",
+              "default": 57.22,
+              "disabled": false,
+              "max": 76.67,
+              "min": 35.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "read",
+              "default": 135.0,
+              "disabled": false,
+              "max": 170.0,
+              "min": 95.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "disabled": true
+          },
+          "KEEP_WARM": {
+            "bottomOven/targetDuration": {
+              "access": "readwrite",
+              "default": 10800,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 76.67,
+              "disabled": false,
+              "max": 93.33,
+              "min": 60.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 170.0,
+              "disabled": false,
+              "max": 200.0,
+              "min": 140.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "MULTI_RACK_COOKING": {
+            "bottomOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "disabled": true
+          },
+          "PRE_HEAT": {
+            "bottomOven/startTime": {
+              "access": "readwrite",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "SELF_CLEAN": {
+            "disabled": true
+          },
+          "SOUS_VIDE": {
+            "bottomOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "read",
+              "default": 54.44,
+              "disabled": false,
+              "max": 96.11,
+              "min": 37.78,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "read",
+              "default": 130.0,
+              "disabled": false,
+              "max": 205.0,
+              "min": 100.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "disabled": true
+          },
+          "STEAM_BAKE": {
+            "bottomOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "disabled": true
+          },
+          "STEAM_CLEAN": {
+            "bottomOven/startTime": {
+              "access": "read",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetDuration": {
+              "access": "read",
+              "default": 1800,
+              "disabled": false,
+              "max": 1800,
+              "min": 1800,
+              "step": 0
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "read",
+              "default": 76.67,
+              "disabled": false,
+              "max": 76.67,
+              "min": 76.67,
+              "step": 0.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "read",
+              "default": 170.0,
+              "disabled": false,
+              "max": 170.0,
+              "min": 170.0,
+              "step": 0.0,
+              "type": "temperature"
+            },
+            "disabled": true
+          },
+          "STEAM_ROAST": {
+            "bottomOven/startTime": {
+              "access": "read",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetFoodProbeTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetFoodProbeTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "disabled": true
+          },
+          "TURKEY": {
+            "bottomOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "bottomOven/targetFoodProbeTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetFoodProbeTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "bottomOven/targetTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "disabled": true
+          }
+        }
+      },
+      "runningTime": {
+        "access": "read",
+        "default": 0,
+        "type": "number"
+      },
+      "startTime": {
+        "access": "readwrite",
+        "default": -1,
+        "max": 3600,
+        "min": 60,
+        "step": 60,
+        "type": "number"
+      },
+      "targetDuration": {
+        "access": "readwrite",
+        "default": 0,
+        "max": 43140,
+        "min": 60,
+        "step": 60,
+        "type": "number"
+      },
+      "targetFoodProbeTemperatureC": {
+        "access": "readwrite",
+        "default": 176.67,
+        "max": 287.78,
+        "min": 76.67,
+        "type": "temperature"
+      },
+      "targetFoodProbeTemperatureF": {
+        "access": "readwrite",
+        "default": 350.0,
+        "max": 550.0,
+        "min": 170.0,
+        "type": "temperature"
+      },
+      "targetTemperatureC": {
+        "access": "readwrite",
+        "default": 176.67,
+        "max": 287.78,
+        "min": 76.67,
+        "step": 1.0,
+        "type": "temperature"
+      },
+      "targetTemperatureF": {
+        "access": "readwrite",
+        "default": 350.0,
+        "max": 550.0,
+        "min": 170.0,
+        "step": 1.0,
+        "type": "temperature"
+      },
+      "timeToEnd": {
+        "access": "read",
+        "type": "number"
+      }
+    },
+    "energySavingMode": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "OFF": {},
+        "ON": {}
+      }
+    },
+    "networkInterface": {
+      "command": {
+        "access": "readwrite",
+        "type": "string",
+        "values": {
+          "APPLIANCE_AUTHORIZE": {},
+          "START": {},
+          "USER_AUTHORIZE": {},
+          "USER_NOT_AUTHORIZE": {}
+        }
+      },
+      "linkQualityIndicator": {
+        "access": "read",
+        "type": "string",
+        "values": {
+          "EXCELLENT": {},
+          "GOOD": {},
+          "POOR": {},
+          "UNDEFINED": {},
+          "VERY_GOOD": {},
+          "VERY_POOR": {}
+        }
+      },
+      "niuSwUpdateCurrentDescription": {
+        "access": "read",
+        "type": "string"
+      },
+      "otaState": {
+        "access": "read",
+        "type": "string",
+        "values": {
+          "DESCRIPTION_AVAILABLE": {},
+          "DESCRIPTION_DOWNLOADING": {},
+          "DESCRIPTION_READY": {},
+          "FW_DOWNLOADING": {},
+          "FW_DOWNLOAD_START": {},
+          "FW_SIGNATURE_CHECK": {},
+          "FW_UPDATE_IN_PROGRESS": {},
+          "IDLE": {},
+          "READY_TO_UPDATE": {},
+          "UPDATE_ABORT": {},
+          "UPDATE_CHECK": {},
+          "UPDATE_ERROR": {},
+          "UPDATE_OK": {},
+          "WAITINGFORAUTHORIZATION": {}
+        }
+      },
+      "startUpCommand": {
+        "access": "write",
+        "type": "string",
+        "values": {
+          "UNINSTALL": {}
+        }
+      },
+      "swAncAndRevision": {
+        "access": "read",
+        "type": "string"
+      },
+      "swVersion": {
+        "access": "read",
+        "type": "string"
+      }
+    },
+    "remoteControl": {
+      "access": "read",
+      "type": "string",
+      "values": {
+        "DISABLED": {},
+        "ENABLED": {},
+        "NOT_SAFETY_RELEVANT_ENABLED": {},
+        "TEMPORARY_LOCKED": {}
+      }
+    },
+    "silentMode": {
+      "access": "readwrite",
+      "max": 100,
+      "min": 0,
+      "step": 20,
+      "type": "number"
+    },
+    "temperatureRepresentation": {
+      "access": "readwrite",
+      "default": "FAHRENHEIT",
+      "type": "string",
+      "values": {
+        "CELSIUS": {},
+        "FAHRENHEIT": {}
+      }
+    },
+    "timeFormat": {
+      "access": "readwrite",
+      "type": "string",
+      "values": {
+        "12_HOURS": {},
+        "24_HOURS": {}
+      }
+    },
+    "upperOven": {
+      "applianceState": {
+        "access": "read",
+        "triggers": [
+          {
+            "action": {
+              "upperOven/executeCommand": {
+                "access": "write",
+                "values": {
+                  "STOPRESET": {}
+                }
+              }
+            },
+            "condition": {
+              "operand_1": "upperOven/applianceState",
+              "operand_2": "RUNNING",
+              "operator": "eq"
+            }
+          },
+          {
+            "action": {
+              "upperOven/executeCommand": {
+                "access": "write",
+                "values": {
+                  "START": {}
+                }
+              }
+            },
+            "condition": {
+              "operand_1": "upperOven/applianceState",
+              "operand_2": "READY_TO_START",
+              "operator": "eq"
+            }
+          },
+          {
+            "action": {
+              "upperOven/executeCommand": {
+                "access": "write",
+                "values": {
+                  "START": {}
+                }
+              }
+            },
+            "condition": {
+              "operand_1": "upperOven/applianceState",
+              "operand_2": "IDLE",
+              "operator": "eq"
+            }
+          },
+          {
+            "action": {
+              "upperOven/executeCommand": {
+                "access": "readwrite",
+                "disabled": false
+              }
+            },
+            "condition": {
+              "operand_1": "value",
+              "operand_2": "END_OF_CYCLE",
+              "operator": "eq"
+            }
+          }
+        ],
+        "type": "string",
+        "values": {
+          "ALARM": {},
+          "DELAYED_START": {},
+          "END_OF_CYCLE": {},
+          "IDLE": {},
+          "READY_TO_START": {},
+          "RUNNING": {}
+        }
+      },
+      "cavityLight": {
+        "access": "readwrite",
+        "type": "boolean",
+        "values": {
+          "OFF": {},
+          "ON": {}
+        }
+      },
+      "displayFoodProbeTemperatureC": {
+        "access": "read",
+        "type": "temperature"
+      },
+      "displayFoodProbeTemperatureF": {
+        "access": "read",
+        "type": "temperature"
+      },
+      "displayTemperatureC": {
+        "access": "read",
+        "type": "temperature"
+      },
+      "displayTemperatureF": {
+        "access": "read",
+        "type": "temperature"
+      },
+      "doorState": {
+        "access": "read",
+        "type": "string",
+        "values": {
+          "CLOSED": {},
+          "OPEN": {}
+        }
+      },
+      "executeCommand": {
+        "access": "write",
+        "type": "string",
+        "values": {
+          "START": {},
+          "STOPRESET": {}
+        }
+      },
+      "foodProbeInsertionState": {
+        "access": "read",
+        "type": "string",
+        "values": {
+          "INSERTED": {},
+          "NOT_INSERTED": {}
+        }
+      },
+      "program": {
+        "access": "readwrite",
+        "triggers": [
+          {
+            "action": {
+              "$self": {
+                "disabled": true
+              }
+            },
+            "condition": {
+              "operand_1": "upperOven/program",
+              "operand_2": "'210'",
+              "operator": "eq"
+            }
+          },
+          {
+            "action": {
+              "$self": {
+                "disabled": false
+              }
+            },
+            "condition": {
+              "operand_1": "upperOven/program",
+              "operand_2": "'210'",
+              "operator": "ne"
+            }
+          }
+        ],
+        "type": "string",
+        "values": {
+          "AIR_FRY": {
+            "upperOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetFoodProbeTemperatureC": {
+              "access": "readwrite",
+              "default": 218.33,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetFoodProbeTemperatureF": {
+              "access": "readwrite",
+              "default": 425.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 218.33,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 425.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "BAKE": {
+            "upperOven/startTime": {
+              "access": "readwrite",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "BREAD_PROOF": {
+            "disabled": true,
+            "upperOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "read",
+              "default": 37.78,
+              "disabled": false,
+              "max": 37.78,
+              "min": 37.78,
+              "step": 0.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "read",
+              "default": 100.0,
+              "disabled": false,
+              "max": 100.0,
+              "min": 100.0,
+              "step": 0.0,
+              "type": "temperature"
+            }
+          },
+          "BROIL": {
+            "disabled": true,
+            "upperOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "read",
+              "default": 287.78,
+              "disabled": false,
+              "max": 287.78,
+              "min": 204.44,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "read",
+              "default": 550.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 400.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "CONVENTIONAL_BAKE": {
+            "upperOven/startTime": {
+              "access": "readwrite",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 162.78,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 325.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "CONVENTIONAL_ROAST": {
+            "upperOven/startTime": {
+              "access": "readwrite",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetFoodProbeTemperatureC": {
+              "access": "readwrite",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetFoodProbeTemperatureF": {
+              "access": "readwrite",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "DEHYDRATE": {
+            "disabled": true,
+            "upperOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "read",
+              "default": 57.22,
+              "disabled": false,
+              "max": 76.67,
+              "min": 35.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "read",
+              "default": 135.0,
+              "disabled": false,
+              "max": 170.0,
+              "min": 95.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "KEEP_WARM": {
+            "upperOven/targetDuration": {
+              "access": "readwrite",
+              "default": 10800,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 76.67,
+              "disabled": false,
+              "max": 93.33,
+              "min": 60.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 170.0,
+              "disabled": false,
+              "max": 200.0,
+              "min": 140.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "MULTI_RACK_COOKING": {
+            "disabled": true,
+            "upperOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "PRE_HEAT": {
+            "upperOven/startTime": {
+              "access": "readwrite",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "readwrite",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "readwrite",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "SELF_CLEAN": {
+            "disabled": true
+          },
+          "SOUS_VIDE": {
+            "disabled": true,
+            "upperOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "read",
+              "default": 54.44,
+              "disabled": false,
+              "max": 96.11,
+              "min": 37.78,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "read",
+              "default": 130.0,
+              "disabled": false,
+              "max": 205.0,
+              "min": 100.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "STEAM_BAKE": {
+            "disabled": true,
+            "upperOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 101.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 215.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "STEAM_CLEAN": {
+            "disabled": true,
+            "upperOven/startTime": {
+              "access": "read",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "read",
+              "default": 76.67,
+              "disabled": false,
+              "max": 76.67,
+              "min": 76.67,
+              "step": 0.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "read",
+              "default": 170.0,
+              "disabled": false,
+              "max": 170.0,
+              "min": 170.0,
+              "step": 0.0,
+              "type": "temperature"
+            }
+          },
+          "STEAM_ROAST": {
+            "disabled": true,
+            "upperOven/startTime": {
+              "access": "read",
+              "default": -1,
+              "disabled": false,
+              "max": 3600,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetDuration": {
+              "access": "read",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetFoodProbeTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 101.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetFoodProbeTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 215.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 101.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 215.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          },
+          "TURKEY": {
+            "disabled": true,
+            "upperOven/targetDuration": {
+              "access": "readwrite",
+              "default": 0,
+              "disabled": false,
+              "max": 43140,
+              "min": 60,
+              "step": 60
+            },
+            "upperOven/targetFoodProbeTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetFoodProbeTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureC": {
+              "access": "read",
+              "default": 176.67,
+              "disabled": false,
+              "max": 287.78,
+              "min": 76.67,
+              "step": 5.0,
+              "type": "temperature"
+            },
+            "upperOven/targetTemperatureF": {
+              "access": "read",
+              "default": 350.0,
+              "disabled": false,
+              "max": 550.0,
+              "min": 170.0,
+              "step": 5.0,
+              "type": "temperature"
+            }
+          }
+        }
+      },
+      "runningTime": {
+        "access": "read",
+        "default": 0,
+        "type": "number"
+      },
+      "startTime": {
+        "access": "readwrite",
+        "default": -1,
+        "max": 3600,
+        "min": 60,
+        "step": 60,
+        "type": "number"
+      },
+      "targetDuration": {
+        "access": "readwrite",
+        "default": 0,
+        "max": 43140,
+        "min": 60,
+        "step": 60,
+        "type": "number"
+      },
+      "targetFoodProbeTemperatureC": {
+        "access": "readwrite",
+        "default": 76.67,
+        "max": 98.89,
+        "min": 60.0,
+        "step": 1.0,
+        "type": "temperature"
+      },
+      "targetFoodProbeTemperatureF": {
+        "access": "readwrite",
+        "default": 170.0,
+        "max": 210.0,
+        "min": 140.0,
+        "step": 1.0,
+        "type": "temperature"
+      },
+      "targetTemperatureC": {
+        "access": "readwrite",
+        "default": 176.67,
+        "max": 287.78,
+        "min": 76.67,
+        "step": 1.0,
+        "type": "temperature"
+      },
+      "targetTemperatureF": {
+        "access": "readwrite",
+        "default": 350.0,
+        "max": 550.0,
+        "min": 170.0,
+        "step": 1.0,
+        "type": "temperature"
+      },
+      "timeToEnd": {
+        "access": "read",
+        "type": "number"
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "applianceId": "948930000_00:83404825-443E070213DF",
+  "properties": {
+    "desired": {},
+    "reported": {
+      "alerts": [
+        {
+          "severity": "FAULT",
+          "acknowledgeStatus": "NOT_NEEDED",
+          "code": "36"
+        }
+      ],
+      "temperatureRepresentation": "FAHRENHEIT",
+      "networkInterface": {
+        "swVersion": "v1.9.1_hacl",
+        "linkQualityIndicator": "GOOD",
+        "otaState": "IDLE",
+        "swAncAndRevision": "S00006777A",
+        "niuSwUpdateCurrentDescription": "A16323310A-S00006777A"
+      },
+      "remoteControl": "ENABLED",
+      "timeFormat": "KEY_ERROR",
+      "upperOven": {
+        "program": "KEY_ERROR",
+        "applianceState": "DELAYED_START",
+        "targetTemperatureF": 0.0,
+        "targetTemperatureC": -17.77777777777778,
+        "targetDuration": 0,
+        "targetFoodProbeTemperatureC": -17.77777777777778,
+        "targetFoodProbeTemperatureF": 0.0,
+        "cavityLight": false,
+        "doorState": "CLOSED",
+        "startTime": 3600,
+        "foodProbeInsertionState": "NOT_INSERTED",
+        "timeToEnd": 0
+      },
+      "connectivityState": "connected",
+      "energySavingMode": "ON",
+      "bottomOven": {
+        "applianceState": "RUNNING",
+        "targetDuration": 120,
+        "targetFoodProbeTemperatureC": -17.77777777777778,
+        "targetFoodProbeTemperatureF": 0.0,
+        "program": "BAKE",
+        "cavityLight": false,
+        "doorState": "CLOSED",
+        "targetTemperatureF": 350.0,
+        "targetTemperatureC": 176.67,
+        "foodProbeInsertionState": "NOT_INSERTED",
+        "startTime": -1,
+        "displayTemperatureC": 37.77777777777778,
+        "displayTemperatureF": 100.0,
+        "timeToEnd": 60
+      }
+    },
+    "metadata": {}
+  },
+  "status": "enabled",
+  "connectionState": "connected"
+}

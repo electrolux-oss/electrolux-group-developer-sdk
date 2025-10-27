@@ -1,0 +1,44 @@
+{
+  "applianceId": "944066532_00:90817692-443E07000083",
+  "properties": {
+    "desired": {},
+    "reported": {
+      "applianceInfo": {
+        "applianceType": "OV",
+        "capabilityHash": "08423737df477bd24eb833728d6d57b3887039d36a95dde19395e6c8f9e1542c"
+      },
+      "temperatureRepresentation": "CELSIUS",
+      "doorState": "CLOSED",
+      "remoteControl": "ENABLED",
+      "cpv": "02",
+      "targetFoodProbeTemperatureC": -17.833333333333332,
+      "targetTemperatureF": 302.0,
+      "targetFoodProbeTemperatureF": -0.1,
+      "displayFoodProbeTemperatureC": 0,
+      "displayFoodProbeTemperatureF": 32,
+      "targetTemperatureC": 150.0,
+      "displayTemperatureC": 130.0,
+      "displayTemperatureF": 266.0,
+      "program": "TRUE_FAN",
+      "runningTime": 0,
+      "applianceState": "DELAYED_START",
+      "targetMicrowavePower": 0,
+      "alerts": [],
+      "networkInterface": {
+        "linkQualityIndicator": "POOR",
+        "otaState": "IDLE"
+      },
+      "foodProbeInsertionState": "NOT_INSERTED",
+      "cavityLight": false,
+      "targetDuration": 0,
+      "timeToEnd": 0,
+      "startTime": 1800,
+      "processPhase": "NONE",
+      "connectivityState": "connected"
+    },
+    "metadataDesired": {},
+    "metadata": {}
+  },
+  "status": "enabled",
+  "connectionState": "connected"
+}

@@ -1,0 +1,186 @@
+{
+  "applianceId": "999007094_50:20700002-443E071A9412",
+  "properties": {
+    "desired": {},
+    "reported": {
+      "doorState": "OPEN",
+      "timeToEnd": 10440,
+      "networkInterfaceAlwaysOn": "ON",
+      "miscellaneous": {},
+      "applianceUiSwVersion": "URCB003D",
+      "applianceTotalWorkingTime": 111600,
+      "remoteControl": "NOT_SAFETY_RELEVANT_ENABLED",
+      "language": "ENGLISH",
+      "dryingNominalLoadWeight": 9000,
+      "fCMiscellaneousState": {
+        "optisenseResult": 65535,
+        "ecoLevel": 6
+      },
+      "cyclePhase": "UNAVAILABLE",
+      "endOfCycleSound": "SHORT_SOUND",
+      "cyclePersonalization": {
+        "reversePlus": false,
+        "tDEconomy_Eco": true,
+        "refresh": false,
+        "dryingTime": 0,
+        "programUID": "COTTON_PR_COTTONS",
+        "antiCreaseValue": 30,
+        "tDEconomy_Night": false,
+        "humidityTarget": "IRON",
+        "drynessValue": "MINIMUM"
+      },
+      "startTime": 1800,
+      "dwywInfo": {
+        "wmSn": "00000000",
+        "state": "OFF"
+      },
+      "stopTime": -1,
+      "userSelections": {
+        "reversePlus": false,
+        "tDEconomy_Eco": true,
+        "humidityTarget": "CUPBOARD",
+        "refresh": false,
+        "dryingTime": 0,
+        "drynessValue": "MINIMUM",
+        "programUID": "COTTON_PR_COTTONS",
+        "antiCreaseValue": 30,
+        "tDEconomy_Night": false,
+        "memoryId": 255,
+        "tDEconomy_Quick": false,
+        "steamValue": "STEAM_OFF"
+      },
+      "minFinishInTime": 0,
+      "waterHardness": "SOFT",
+      "applianceInfo": {
+        "applianceType": "TD",
+        "capabilityHash": "fef207bd9bcab9afa2cfe5ec6c4ab3528d49f690350cc04b9ed8bd46d491c7be"
+      },
+      "uiLockMode": false,
+      "cpv": "00",
+      "fcOptisenseLoadWeight": 65408,
+      "applianceState": "DELAYED_START",
+      "applianceMode": "NORMAL",
+      "applianceMainBoardSwVersion": "TR140A49",
+      "totalCycleCounter": 23,
+      "measuredLoadWeight": 65535,
+      "alerts": [
+        {
+          "severity": "WARNING",
+          "acknowledgeStatus": "PENDING",
+          "code": "POWER_FAILURE"
+        }
+      ],
+      "networkInterface": {
+        "otaState": "IDLE",
+        "swVersion": "v3.0.0S_argo",
+        "linkQualityIndicator": "EXCELLENT",
+        "niuSwUpdateCurrentDescription": "A23642201A-S00007645A",
+        "swAncAndRevision": "S00007645A"
+      },
+      "remoteNotificationPending": "OFF",
+      "applianceCareAndMaintenance0": {
+        "1": {
+          "occured": false,
+          "threshold": 255
+        },
+        "2": {
+          "occured": false,
+          "threshold": 100
+        },
+        "3": {
+          "occured": false,
+          "threshold": 1
+        },
+        "4": {
+          "occured": false,
+          "threshold": 0
+        },
+        "5": {
+          "occured": false,
+          "threshold": 0
+        }
+      },
+      "applianceCareAndMaintenance1": {
+        "6": {
+          "occured": false,
+          "threshold": 0
+        },
+        "7": {
+          "occured": false,
+          "threshold": 0
+        },
+        "8": {
+          "occured": false,
+          "threshold": 0
+        },
+        "9": {
+          "occured": false,
+          "threshold": 0
+        },
+        "10": {
+          "occured": false,
+          "threshold": 0
+        }
+      },
+      "applianceCareAndMaintenance2": {
+        "11": {
+          "occured": false,
+          "threshold": 0
+        }
+      },
+      "cycleMemory3": {
+        "reversePlus": false,
+        "tDEconomy_Eco": false,
+        "humidityTarget": "CUPBOARD",
+        "refresh": false,
+        "dryingTime": 65535,
+        "drynessValue": "MINIMUM",
+        "memoryId": 10,
+        "programUID": "MACHINE_SETTINGS_HIDDEN_TEST",
+        "antiCreaseValue": 255,
+        "tDEconomy_Night": false,
+        "tDEconomy_Quick": false,
+        "steamValue": "STEAM_OFF"
+      },
+      "applianceCareAndMaintenance3": {
+        "16": {
+          "occured": false,
+          "threshold": 0
+        }
+      },
+      "connectivityState": "disconnected",
+      "cycleMemory2": {
+        "reversePlus": false,
+        "tDEconomy_Eco": false,
+        "humidityTarget": "CUPBOARD",
+        "refresh": false,
+        "dryingTime": 65535,
+        "drynessValue": "MINIMUM",
+        "memoryId": 20,
+        "programUID": "MACHINE_SETTINGS_HIDDEN_TEST",
+        "antiCreaseValue": 255,
+        "tDEconomy_Night": false,
+        "tDEconomy_Quick": false,
+        "steamValue": "STEAM_OFF"
+      },
+      "cycleMemory1": {
+        "reversePlus": false,
+        "tDEconomy_Eco": false,
+        "refresh": false,
+        "dryingTime": 65535,
+        "memoryId": 30,
+        "programUID": "MACHINE_SETTINGS_HIDDEN_TEST",
+        "antiCreaseValue": 255,
+        "tDEconomy_Night": false,
+        "humidityTarget": "CUPBOARD",
+        "drynessValue": "MINIMUM",
+        "tDEconomy_Quick": false,
+        "steamValue": "STEAM_OFF"
+      }
+    },
+    "metadataDesired": {},
+    "metadata": {}
+  },
+  "status": "enabled",
+  "connectionState": "connected"
+}
