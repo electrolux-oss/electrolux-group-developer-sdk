@@ -1,6 +1,6 @@
-# electrolux_group_developer_sdk
+# Electrolux Group Developer SDK
 
-A Python async client library for interacting with the **Electrolux Developer Portal API**.  
+The official Python async client library for interacting with the **Electrolux Developer Portal API**.  
 This library handles authentication, token management, and communication with appliances (e.g. getting appliance info,
 state, and sending commands).
 

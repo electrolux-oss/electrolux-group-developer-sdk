@@ -27,6 +27,23 @@ By participating, you agree to uphold this standard of behavior.
 
 ---
 
+## Semantic Versioning
+
+This project follows [Semantic Versioning 2.0.0](https://semver.org/).
+
+`MAJOR.MINOR.PATCH`
+
+- MAJOR — incremented for incompatible changes.
+- MINOR — incremented for backward-compatible feature additions.
+- PATCH — incremented for backward-compatible bug fixes or small improvements.
+
+Examples:
+- 1.0.0 → Initial stable release
+- 1.1.0 → Added new features, but remains backward compatible
+- 1.1.1 → Fixed a bug, no incompatible changes
+
+---
+
 ## Reporting Issues
 If you find a bug, have a question, or want to suggest a feature, please open a GitHub Issue:
 

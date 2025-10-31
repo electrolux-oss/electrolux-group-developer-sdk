@@ -12,6 +12,7 @@ from electrolux_group_developer_sdk.client.appliance_client import ApplianceClie
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
 from electrolux_group_developer_sdk.client.dto.appliance_details import ApplianceDetails
 from electrolux_group_developer_sdk.client.dto.appliance_state import ApplianceState
+from electrolux_group_developer_sdk.constants import SDK_VERSION, SDK_USER_AGENT
 
 EXTERNAL_USER_AGENT = "external-user-agent"
 
@@ -497,4 +498,4 @@ def check_header_user_agent(mocked):
 
     # Check headers
     assert "User-Agent" in headers
-    assert "external-user-agent ElectroluxGroupDeveloperSDK/0.0.21" in headers["User-Agent"]
+    assert f"external-user-agent {SDK_USER_AGENT}/{SDK_VERSION}" in headers["User-Agent"]
