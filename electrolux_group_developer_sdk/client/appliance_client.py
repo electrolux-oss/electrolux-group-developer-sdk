@@ -5,7 +5,7 @@ from collections.abc import Awaitable, Callable
 from typing import Optional, Dict, Any, List
 
 import aiohttp
-from aiohttp import ClientTimeout
+from aiohttp import ClientTimeout, ClientResponseError
 from aiohttp.hdrs import USER_AGENT, AUTHORIZATION
 
 from .appliance_data_factory import appliance_data_factory
@@ -80,6 +80,12 @@ class ApplianceClient:
     async def test_connection(self):
         try:
             await self._send_authorized_request(GET, GET_APPLIANCES_URL)
+        except ApplianceClientException as e:
+            _LOGGER.error("Test connection failed: %s", e)
+            raise FailedConnectionException(f"Failed connection.", status_code=e.status)
+        except ClientResponseError as e:
+            _LOGGER.error("Test connection failed: %s", e)
+            raise FailedConnectionException(f"Failed connection.", status_code=e.status)
         except Exception as e:
             _LOGGER.error("Test connection failed: %s", e)
             raise FailedConnectionException("Failed connection.")

@@ -39,8 +39,6 @@ WM_CONFIG = {
         AD_TANK_B_DET_LOADED_CAPABILITY: "fCMiscellaneousState/adTankBDetLoaded",
         TANK_A_DET_LOAD_FOR_NOMINAL_WEIGHT: "tankADetLoadForNominalWeight",
         TANK_A_DET_LOAD_FOR_NOMINAL_WEIGHT_CAPABILITY: "fCMiscellaneousState/tankADetLoadForNominalWeight",
-        OPTISENSE_RESULT: "optisenseResult",
-        OPTISENSE_RESULT_CAPABILITY: "fCMiscellaneousState/optisenseResult",
         AD_TANK_B_SOFT_LOADED: "adTankBSoftLoaded",
         AD_TANK_B_SOFT_LOADED_CAPABILITY: "fCMiscellaneousState/adTankBSoftLoaded",
         ECO_LEVEL: "ecoLevel",
@@ -158,12 +156,6 @@ class WmConfig(ApplianceConfig):
         """Get the current tank A detergent load for nominal weight from the reported state."""
         return reported_appliance_state.get(self.get_property(FC_MISCELLANEOUS_STATE), {}).get(
             self.get_property(TANK_A_DET_LOAD_FOR_NOMINAL_WEIGHT)
-        )
-
-    def get_current_f_c_miscellaneous_state_optisense_result(self, reported_appliance_state: dict[str, Any]) -> int:
-        """Get the current optisense result from the reported state."""
-        return reported_appliance_state.get(self.get_property(FC_MISCELLANEOUS_STATE), {}).get(
-            self.get_property(OPTISENSE_RESULT)
         )
 
     def get_current_f_c_miscellaneous_state_ad_tank_b_soft_loaded(self,

@@ -194,10 +194,6 @@ def test_get_current_f_c_miscellaneous_state_tank_a_det_load_for_nominal_weight(
     assert wm_appliance.get_current_f_c_miscellaneous_state_tank_a_det_load_for_nominal_weight() == 0
 
 
-def test_get_current_f_c_miscellaneous_state_optisense_result(wm_appliance):
-    assert wm_appliance.get_current_f_c_miscellaneous_state_optisense_result() == 0
-
-
 def test_get_current_f_c_miscellaneous_state_ad_tank_b_soft_loaded(wm_appliance):
     assert wm_appliance.get_current_f_c_miscellaneous_state_ad_tank_b_soft_loaded() == 0
 

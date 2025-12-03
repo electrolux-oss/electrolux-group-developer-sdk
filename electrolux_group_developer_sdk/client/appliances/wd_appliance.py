@@ -98,12 +98,6 @@ class WDAppliance(ApplianceData):
             self.state.properties.get(REPORTED)
         )
 
-    def get_current_f_c_miscellaneous_state_optisense_result(self) -> int:
-        """Get the current optisense result from the reported state."""
-        return self._config.get_current_f_c_miscellaneous_state_optisense_result(
-            self.state.properties.get(REPORTED)
-        )
-
     def get_current_f_c_miscellaneous_state_ad_tank_b_soft_loaded(self) -> int:
         """Get the current AD tank B softener load from the reported state."""
         return self._config.get_current_f_c_miscellaneous_state_ad_tank_b_soft_loaded(
