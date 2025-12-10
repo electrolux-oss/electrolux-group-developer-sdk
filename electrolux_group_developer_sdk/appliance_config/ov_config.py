@@ -1,6 +1,6 @@
 """Oven configuration."""
 import datetime
-from typing import Any
+from typing import Any, Optional
 from zoneinfo import ZoneInfo
 
 from .config import ApplianceConfig
@@ -57,7 +57,7 @@ class OvConfig(ApplianceConfig):
             if not meta.get("disabled", False)
         ]
 
-    def get_temperature_range(self, program_name: str, reported_appliance_state: dict) -> dict[str, float]:
+    def get_temperature_range(self, program_name: str, reported_appliance_state: dict[str, Any]) -> dict[str, float]:
         """Extract temperature range for the given program based on temperature unit."""
 
         program_trigger = self.capabilities.get(self.get_property(PROGRAM), {}).get(VALUES, {}).get(program_name, {})
@@ -202,7 +202,7 @@ class OvConfig(ApplianceConfig):
         """Get the current display food probe temperature c from the reported state."""
         return self._get_state(DISPLAY_FOOD_PROBE_TEMPERATURE_C, reported_appliance_state)
 
-    def get_current_start_at(self, reported_appliance_state: dict[str, Any]) -> datetime:
+    def get_current_start_at(self, reported_appliance_state: dict[str, Any]) -> Optional[datetime.datetime]:
         """Get the current start at time from the reported state."""
         appliance_state = self.get_current_appliance_state(reported_appliance_state)
 

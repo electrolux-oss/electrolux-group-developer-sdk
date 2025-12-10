@@ -1,5 +1,6 @@
 import logging
 import time
+from typing import Callable, Optional
 
 import jwt
 
@@ -13,7 +14,7 @@ from ..constants import REFRESH_TOKEN, POST
 _LOGGER = logging.getLogger(__name__)
 
 
-def get_user_id_from_token(token) -> str:
+def get_user_id_from_token(token: str) -> str:
     """Extract user id from token"""
     payload = jwt.decode(
         token,
@@ -26,7 +27,7 @@ def get_user_id_from_token(token) -> str:
 
 
 class TokenManager:
-    def __init__(self, access_token: str, refresh_token: str, api_key: str, on_token_update=None):
+    def __init__(self, access_token: str, refresh_token: str, api_key: str, on_token_update: Optional[Callable[[str, str, str], None]] = None):
         """Initialize the token manager."""
         if access_token is None:
             _LOGGER.error("Access Token is missing")
@@ -35,7 +36,7 @@ class TokenManager:
         self._auth_data = AuthData(access_token, refresh_token, api_key)
         self.update(access_token, refresh_token, api_key)
 
-    def update(self, access_token: str, refresh_token: str, api_key: str):
+    def update(self, access_token: str, refresh_token: str, api_key: str) -> None:
         """Update the authentication data."""
         if self._on_token_update:
             self._on_token_update(access_token, refresh_token, api_key)
@@ -75,7 +76,7 @@ class TokenManager:
             _LOGGER.error("Access Token is invalid - %s", e)
             return False
 
-    async def refresh_token(self):
+    async def refresh_token(self) -> bool:
         auth_data = self._auth_data
 
         if not auth_data or auth_data.refresh_token is None:
@@ -98,7 +99,7 @@ class TokenManager:
             _LOGGER.error("Error during token refresh: %s", e)
             return False
 
-    async def revoke_token(self):
+    async def revoke_token(self) -> bool:
         auth_data = self._auth_data
         if not auth_data or auth_data.refresh_token is None:
             raise Exception("Missing refresh token")
@@ -115,7 +116,7 @@ class TokenManager:
             _LOGGER.error("Error during token revoke: %s", e)
             return False
 
-    async def get_auth_data(self):
+    async def get_auth_data(self) -> AuthData:
         auth_data = self._auth_data
         if not auth_data or auth_data.access_token is None or auth_data.api_key is None:
             raise Exception("Missing access token or API key")

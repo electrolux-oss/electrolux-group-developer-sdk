@@ -21,7 +21,7 @@ class APAppliance(ApplianceData):
         capabilities = self.details.capabilities if self.details else {}
         self._config = ApConfigManager().get_config(self.appliance.applianceType, capabilities)
 
-    def is_feature_supported(self, feature) -> bool:
+    def is_feature_supported(self, feature: str | list[str]) -> bool:
         return self._config.is_capability_supported(feature)
 
     def get_air_quality_map(self) -> dict[str, str]:
@@ -60,13 +60,13 @@ class APAppliance(ApplianceData):
         """Return the current air quality value for the specified property."""
         return self._config.get_air_quality(self.state.properties.get(REPORTED), air_quality_property)
 
-    def get_fan_speed_command(self, fan_speed) -> dict[str, int]:
+    def get_fan_speed_command(self, fan_speed: int) -> dict[str, Any]:
         """Return the command payload to set the fan speed."""
         return {
             self._config.get_property(FAN_SPEED): fan_speed
         }
 
-    def get_mode_command(self, mode) -> dict[str, str]:
+    def get_mode_command(self, mode: str) -> dict[str, Any]:
         """Return the command payload to set the mode."""
         return {
             self._config.get_property(WORKMODE): mode

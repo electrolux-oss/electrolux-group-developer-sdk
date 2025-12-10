@@ -152,7 +152,7 @@ class RvcConfig(ApplianceConfig):
     def _is_paused_map(self) -> dict[str, Any]:
         return self.mapping.get(IS_PAUSED_MAP, {})
 
-    def get_supported_modes(self) -> list[Any]:
+    def get_supported_modes(self) -> list[int] | list[str]:
         """Return the list of supported readable modes."""
         mode_capability = self.capabilities.get(self.get_property(MODE))
         if not mode_capability:

@@ -21,7 +21,7 @@ class CRAppliance(ApplianceData):
         capabilities = self.details.capabilities if self.details else {}
         self._config = CrConfigManager().get_config(self.appliance.applianceType, capabilities)
 
-    def is_feature_supported(self, feature) -> bool:
+    def is_feature_supported(self, feature: str | list[str]) -> bool:
         return self._config.is_capability_supported(feature)
 
     def is_cavity_feature_supported(self, cavity: str, feature: str) -> bool:
@@ -91,15 +91,15 @@ class CRAppliance(ApplianceData):
         """Get the current cavity door state from the reported state."""
         return self._config.get_current_door_state(cavity, self.state.properties.get(REPORTED))
 
-    def get_set_cavity_temperature_f_command(self, cavity, temperature) -> dict[str, Any]:
+    def get_set_cavity_temperature_f_command(self, cavity: str, temperature: float) -> dict[str, Any]:
         return {
             cavity: {self._config.get_property(TARGET_TEMPERATURE_F): temperature}
         }
 
-    def get_set_cavity_temperature_c_command(self, cavity, temperature) -> dict[str, Any]:
+    def get_set_cavity_temperature_c_command(self, cavity: str, temperature: float) -> dict[str, Any]:
         return {
             cavity: {self._config.get_property(TARGET_TEMPERATURE_C): temperature}
         }
 
-    def get_set_vacation_holiday_mode_command(self, value) -> dict[str, Any]:
+    def get_set_vacation_holiday_mode_command(self, value: str) -> dict[str, Any]:
         return {self._config.get_property(VACATION_HOLIDAY_MODE): value}

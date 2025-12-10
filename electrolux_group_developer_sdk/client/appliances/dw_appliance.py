@@ -22,7 +22,7 @@ class DWAppliance(ApplianceData):
         capabilities = self.details.capabilities if self.details else {}
         self._config = DwConfigManager().get_config(self.appliance.applianceType, capabilities)
 
-    def is_feature_supported(self, feature) -> bool:
+    def is_feature_supported(self, feature: str | list[str]) -> bool:
         return self._config.is_capability_supported(feature)
 
     def get_supported_programs(self) -> list[str]:

@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Any
 
 from pydantic import BaseModel
 
@@ -15,4 +15,4 @@ class ApplianceInfo(BaseModel):
 
 class ApplianceDetails(BaseModel):
     applianceInfo: ApplianceInfo
-    capabilities: Dict[str, Any]
+    capabilities: dict[str, Any]

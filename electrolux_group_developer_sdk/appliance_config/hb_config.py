@@ -49,7 +49,7 @@ class HbConfig(ApplianceConfig):
         hood_capabilities = self.capabilities.get(self.get_property(HOB_HOOD), {})
         return key is not None and hood_capabilities is not None and key in hood_capabilities
 
-    def is_hob_zone_capability_supported(self, zone:str, feature: str) -> bool:
+    def is_hob_zone_capability_supported(self, zone: str, feature: str) -> bool:
         """Return True if the appliance supports this hob zone capability."""
         key = self.get_property(feature)
         hob_zone_capabilities = self.capabilities.get(zone)

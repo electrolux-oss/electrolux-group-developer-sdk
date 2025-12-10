@@ -1,6 +1,6 @@
 """Tumble Dryer configuration."""
 import datetime
-from typing import Any
+from typing import Any, Optional
 from zoneinfo import ZoneInfo
 
 from .config import ApplianceConfig
@@ -81,7 +81,7 @@ class TdConfig(ApplianceConfig):
         """Get the current appliance state from the reported state."""
         return self._get_state(APPLIANCE_STATE, reported_appliance_state)
 
-    def get_current_start_at_stop_at(self, reported_appliance_state: dict[str, Any]) -> tuple[datetime, datetime]:
+    def get_current_start_at_stop_at(self, reported_appliance_state: dict[str, Any]) -> tuple[Optional[datetime.datetime], Optional[datetime.datetime]]:
         """Get the current start at time and end at time from the reported state."""
         appliance_state = self.get_current_appliance_state(reported_appliance_state)
 

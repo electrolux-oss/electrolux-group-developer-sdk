@@ -21,7 +21,7 @@ class HBAppliance(ApplianceData):
         capabilities = self.details.capabilities if self.details else {}
         self._config = HbConfigManager().get_config(self.appliance.applianceType, capabilities)
 
-    def is_feature_supported(self, feature) -> bool:
+    def is_feature_supported(self, feature: str | list[str]) -> bool:
         return self._config.is_capability_supported(feature)
 
     def is_hood_feature_supported(self, feature: str) -> bool:
@@ -106,7 +106,7 @@ class HBAppliance(ApplianceData):
         """Return the current zone hob pot detected."""
         return self._config.get_current_zone_hob_pot_detected(hob_zone, self.state.properties.get(REPORTED))
 
-    def get_hood_fan_speed_command(self, fan_speed) -> dict[str, Any]:
+    def get_hood_fan_speed_command(self, fan_speed: str) -> dict[str, Any]:
         """Return the command payload to set a new hood fan speed."""
         return {
             self._config.get_property(HOB_HOOD): {
@@ -114,7 +114,7 @@ class HBAppliance(ApplianceData):
             }
         }
 
-    def get_hood_state_command(self, state) -> dict[str, Any]:
+    def get_hood_state_command(self, state: str) -> dict[str, Any]:
         """Return the command payload to set a new hood state."""
         return {
             self._config.get_property(HOB_HOOD): {
@@ -122,7 +122,7 @@ class HBAppliance(ApplianceData):
             }
         }
 
-    def get_key_sound_tone_command(self, tone) -> dict[str, Any]:
+    def get_key_sound_tone_command(self, tone: str) -> dict[str, Any]:
         """Return the command payload to set the key sound tone."""
         return {
             self._config.get_property(KEY_SOUND_TONE): tone

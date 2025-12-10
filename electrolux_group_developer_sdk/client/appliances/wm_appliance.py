@@ -1,5 +1,5 @@
 import datetime
-from typing import Any
+from typing import Any, Optional
 
 from pydantic import PrivateAttr
 
@@ -23,19 +23,19 @@ class WMAppliance(ApplianceData):
         capabilities = self.details.capabilities if self.details else {}
         self._config = WmConfigManager().get_config(self.appliance.applianceType, capabilities)
 
-    def is_feature_supported(self, feature) -> bool:
+    def is_feature_supported(self, feature: str | list[str]) -> bool:
         return self._config.is_capability_supported(feature)
 
     def get_supported_programs(self) -> list[str]:
         """Get appliance programs."""
         return self._config.get_supported_programs()
 
-    def get_supported_spin_speeds(self, program: str = None) -> list[str]:
+    def get_supported_spin_speeds(self, program: Optional[str] = None) -> list[str]:
         """Get appliance spin speeds."""
         current_program = program if program is not None else self.get_current_program()
         return self._config.get_supported_spin_speeds(current_program)
 
-    def get_supported_temperature(self, program: str = None) -> list[str]:
+    def get_supported_temperature(self, program: Optional[str] = None) -> list[str]:
         """Get appliance temperature."""
         current_program = program if program is not None else self.get_current_program()
         return self._config.get_supported_temperature(current_program)
@@ -179,7 +179,7 @@ class WMAppliance(ApplianceData):
                 self._config.get_property(PROGRAM_UID): program}
         }
 
-    def get_set_spin_speed_command(self, spin_speed: str, program: str = None):
+    def get_set_spin_speed_command(self, spin_speed: str, program: Optional[str] = None):
         """Return the command payload to set the spin speed. The program needs to be included in the command."""
         program = program if program is not None else self._config.get_current_program(
             self.state.properties.get(REPORTED))
@@ -189,7 +189,7 @@ class WMAppliance(ApplianceData):
                 self._config.get_property(ANALOG_SPIN_SPEED): spin_speed}
         }
 
-    def get_set_temperature_command(self, temperature: str, program: str = None):
+    def get_set_temperature_command(self, temperature: str, program: Optional[str] = None):
         """Return the command payload to set the temperature. The program needs to be included in the command."""
         program = program if program is not None else self._config.get_current_program(
             self.state.properties.get(REPORTED))

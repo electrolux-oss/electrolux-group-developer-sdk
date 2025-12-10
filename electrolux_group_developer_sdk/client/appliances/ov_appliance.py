@@ -1,5 +1,5 @@
 import datetime
-from typing import Any
+from typing import Any, Optional
 
 from pydantic import PrivateAttr
 
@@ -22,39 +22,39 @@ class OVAppliance(ApplianceData):
         capabilities = self.details.capabilities if self.details else {}
         self._config = OvConfigManager().get_config(self.appliance.applianceType, capabilities)
 
-    def is_feature_supported(self, feature) -> bool:
+    def is_feature_supported(self, feature: str | list[str]) -> bool:
         return self._config.is_capability_supported(feature)
 
     def get_supported_programs(self) -> list[str]:
         """Return a list of supported modes."""
         return self._config.get_supported_programs()
 
-    def get_supported_min_temp(self, program: str = None) -> float:
+    def get_supported_min_temp(self, program: Optional[str] = None) -> float:
         """Return the minimum supported temperature."""
         current_program = program if program is not None else self.get_current_program()
         return self._config.get_temperature_range(current_program, self.state.properties.get(REPORTED)).get(MIN)
 
-    def get_supported_max_temp(self, program: str = None) -> float:
+    def get_supported_max_temp(self, program: Optional[str] = None) -> float:
         """Return the maximum supported temperature."""
         current_program = program if program is not None else self.get_current_program()
         return self._config.get_temperature_range(current_program, self.state.properties.get(REPORTED)).get(MAX)
 
-    def get_supported_step_temp(self, program: str = None) -> float:
+    def get_supported_step_temp(self, program: Optional[str] = None) -> float:
         """Return the step increment for temperature control."""
         current_program = program if program is not None else self.get_current_program()
         return self._config.get_temperature_range(current_program, self.state.properties.get(REPORTED)).get(STEP)
 
-    def get_supported_min_duration(self, program: str = None) -> float:
+    def get_supported_min_duration(self, program: Optional[str] = None) -> float:
         """Return the minimum supported timer duration."""
         current_program = program if program is not None else self.get_current_program()
         return self._config.get_timer_range(current_program).get(MIN)
 
-    def get_supported_max_duration(self, program: str = None) -> float:
+    def get_supported_max_duration(self, program: Optional[str] = None) -> float:
         """Return the maximum supported timer duration."""
         current_program = program if program is not None else self.get_current_program()
         return self._config.get_timer_range(current_program).get(MAX)
 
-    def get_supported_step_duration(self, program: str = None) -> float:
+    def get_supported_step_duration(self, program: Optional[str] = None) -> float:
         """Return the step increment for timer duration control."""
         current_program = program if program is not None else self.get_current_program()
         return self._config.get_timer_range(current_program).get(STEP)
@@ -131,7 +131,7 @@ class OVAppliance(ApplianceData):
         """Get the current display food probe temperature c from the reported state."""
         return self._config.get_current_display_food_probe_temperature_c(self.state.properties.get(REPORTED))
 
-    def get_program_command(self, program) -> dict[str, Any]:
+    def get_program_command(self, program: str) -> dict[str, Any]:
         """Return the command payload to set the program."""
         return {
             self._config.get_property(PROGRAM): program
@@ -143,13 +143,13 @@ class OVAppliance(ApplianceData):
             self._config.get_property(CAVITY_LIGHT): on
         }
 
-    def get_temperature_c_command(self, temperature) -> dict[str, Any]:
+    def get_temperature_c_command(self, temperature: float) -> dict[str, Any]:
         """Return the command payload to set the temperature in Celsius."""
         return {
             self._config.get_property(TARGET_TEMPERATURE_C): temperature
         }
 
-    def get_temperature_f_command(self, temperature) -> dict[str, Any]:
+    def get_temperature_f_command(self, temperature: float) -> dict[str, Any]:
         """Return the command payload to set the temperature in Fahrenheit."""
         return {
             self._config.get_property(TARGET_TEMPERATURE_F): temperature

@@ -21,7 +21,7 @@ class DHAppliance(ApplianceData):
         capabilities = self.details.capabilities if self.details else {}
         self._config = DhConfigManager().get_config(self.appliance.applianceType, capabilities)
 
-    def is_feature_supported(self, feature) -> bool:
+    def is_feature_supported(self, feature: str | list[str]) -> bool:
         return self._config.is_capability_supported(feature)
 
     def is_appliance_on(self) -> bool:
@@ -68,20 +68,20 @@ class DHAppliance(ApplianceData):
         """Return the current ambient humidity."""
         return self._config.get_current_sensor_humidity(self.state.properties.get(REPORTED))
 
-    def get_fan_speed_command(self, fan_speed) -> dict[str, Any]:
+    def get_fan_speed_command(self, fan_speed: str) -> dict[str, Any]:
         """Return the command payload to set a new fan speed."""
         return {
             self._config.get_property(FAN_SPEED): fan_speed
         }
 
-    def get_mode_command(self, mode) -> dict[str, Any]:
+    def get_mode_command(self, mode: str) -> dict[str, Any]:
         """Return the command payload to set a new mode, or turn off if the mode is 'off'."""
         if mode == self._config.get_property(MODE_OFF):
             return self.get_turn_off_command()
         else:
             return {self._config.get_property(MODE): mode}
 
-    def get_humidity_command(self, humidity) -> dict[str, Any]:
+    def get_humidity_command(self, humidity: int) -> dict[str, Any]:
         """Return the command payload to set a target humidity."""
         return {
             self._config.get_property(TARGET_HUMIDITY): humidity

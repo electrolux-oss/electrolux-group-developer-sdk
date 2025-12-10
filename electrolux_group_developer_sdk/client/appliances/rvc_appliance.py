@@ -23,7 +23,7 @@ class RVCAppliance(ApplianceData):
         capabilities = self.details.capabilities if self.details else {}
         self._config = RvcConfigManager().get_config(self.appliance.applianceType, capabilities)
 
-    def is_feature_supported(self, feature) -> bool:
+    def is_feature_supported(self, feature: str | list[str]) -> bool:
         return self._config.is_capability_supported(feature)
 
     def get_supported_modes(self) -> list[str]:
@@ -104,9 +104,9 @@ class RVCAppliance(ApplianceData):
     def get_gordias_start_room_cleaning_command(self, map_id: int,
                                                 room_ids: list[int],
                                                 sweep_mode: int = 0,
-                                                vacuum_mode="standard",
-                                                water_pump_rate="off",
-                                                number_of_repetitions=1) -> dict[str, Any]:
+                                                vacuum_mode: str = "standard",
+                                                water_pump_rate: str = "off",
+                                                number_of_repetitions: int = 1) -> dict[str, Any]:
         return {
             MAP_COMMAND: "selectRoomsClean",
             MAP_ID: map_id,
@@ -126,10 +126,10 @@ class RVCAppliance(ApplianceData):
     def get_cybele_start_room_cleaning_command(self, map_id: int,
                                                room_ids_names: list[tuple[int, str]],
                                                global_settings_cleaning: bool = True,
-                                               cleaning_type="vacuum",
-                                               vacuum_mode="standard",
-                                               water_pump_rate="off",
-                                               number_of_repetitions=1) -> dict[str, Any]:
+                                               cleaning_type: str = "vacuum",
+                                               vacuum_mode: str = "standard",
+                                               water_pump_rate: str = "off",
+                                               number_of_repetitions: int = 1) -> dict[str, Any]:
         if global_settings_cleaning:
             return {
                 MAP_COMMAND: "selectRoomsClean",

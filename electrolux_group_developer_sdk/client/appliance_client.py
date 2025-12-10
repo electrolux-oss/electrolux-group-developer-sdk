@@ -40,7 +40,7 @@ def _is_dam_appliance(appliance_id):
         return False
 
 
-def _build_user_agent(external_user_agent: str = None) -> str:
+def _build_user_agent(external_user_agent: Optional[str] = None) -> str:
     sdk_version = SDK_VERSION
 
     sdk_user_agent = f"{SDK_USER_AGENT}/{sdk_version}"
@@ -62,7 +62,7 @@ class ApplianceClient:
         _token_manager (TokenManager)
     """
 
-    def __init__(self, token_manager: TokenManager, external_user_agent: str = None):
+    def __init__(self, token_manager: TokenManager, external_user_agent: Optional[str] = None):
         """
         Initialize the ApplianceClient.
 
@@ -77,7 +77,7 @@ class ApplianceClient:
         self._sse_listeners: dict[str, list[Callable[[dict], None]]] = {}
         self._external_user_agent = external_user_agent
 
-    async def test_connection(self):
+    async def test_connection(self) -> None:
         try:
             await self._send_authorized_request(GET, GET_APPLIANCES_URL)
         except ApplianceClientException as e:
@@ -122,7 +122,7 @@ class ApplianceClient:
 
         return appliance_list
 
-    async def get_appliances(self):
+    async def get_appliances(self) -> list[Appliance]:
         """
         Retrieve a list of appliances associated with the authenticated user.
 
@@ -145,7 +145,7 @@ class ApplianceClient:
             _LOGGER.error("Failed to get appliances: %s", e)
             raise ApplianceClientException(f"Failed to get appliances: {e}")
 
-    async def get_appliance_details(self, appliance_id):
+    async def get_appliance_details(self, appliance_id: str) -> ApplianceDetails:
         """
         Retrieve detailed information about a specific appliance.
 
@@ -176,7 +176,7 @@ class ApplianceClient:
             _LOGGER.error("Error during get appliance info: %s", e)
             raise ApplianceClientException(f"Failed to get appliance info: {e}")
 
-    async def get_appliance_state(self, appliance_id):
+    async def get_appliance_state(self, appliance_id: str) -> ApplianceState:
         """
         Retrieve the current state of a specific appliance.
 
@@ -214,7 +214,7 @@ class ApplianceClient:
             _LOGGER.error("Error during get appliance state: %s", e)
             raise ApplianceClientException(f"Failed to get appliance state: {e}")
 
-    async def send_command(self, appliance_id: str, commands: dict[str, Any]):
+    async def send_command(self, appliance_id: str, commands: dict[str, Any]) -> Any:
         """
         Send a command to the appliance.
 
@@ -248,7 +248,7 @@ class ApplianceClient:
             _LOGGER.error("Error sending command: %s", e)
             raise ApplianceClientException(f"Failed to send command: {e}")
 
-    async def get_interactive_maps(self, appliance_id):
+    async def get_interactive_maps(self, appliance_id: str) -> list[dict[str, Any]]:
         """
         Retrieve interactive maps for a given appliance ID.
 
@@ -282,7 +282,7 @@ class ApplianceClient:
             _LOGGER.error("Error during get interactive map: %s", e)
             raise ApplianceClientException(f"Failed to get interactive maps: {e}")
 
-    async def get_memory_maps(self, appliance_id):
+    async def get_memory_maps(self, appliance_id: str) -> list[dict[str, Any]]:
         """
         Retrieve memory maps for a given appliance ID.
 
@@ -316,7 +316,7 @@ class ApplianceClient:
             _LOGGER.error("Error during get memory maps: %s", e)
             raise ApplianceClientException(f"Failed to get memory maps: {e}")
 
-    async def get_livestream_config(self):
+    async def get_livestream_config(self) -> LivestreamConfig:
         url = GET_LIVESTREAM_CONFIG_URL
         try:
             response = await self._send_authorized_request(GET, url)
@@ -415,13 +415,13 @@ class ApplianceClient:
                 _LOGGER.info("Close websession")
                 await websession.close()
 
-    def add_listener(self, appliance_id: str, callback: Callable[[dict], None]):
+    def add_listener(self, appliance_id: str, callback: Callable[[dict], None]) -> None:
         """Register a callback for a specific appliance."""
         _LOGGER.info("Add listener for: %s", appliance_id)
 
         self._sse_listeners.setdefault(appliance_id, []).append(callback)
 
-    def remove_listener(self, appliance_id: str, callback: Callable[[dict], None]):
+    def remove_listener(self, appliance_id: str, callback: Callable[[dict], None]) -> None:
         """Unregister a callback."""
         _LOGGER.info("Remove listener for: %s", appliance_id)
 

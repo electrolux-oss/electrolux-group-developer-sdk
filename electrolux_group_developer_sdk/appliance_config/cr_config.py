@@ -45,7 +45,7 @@ class CrConfig(ApplianceConfig):
 
         return outer_value.get(nested_state_key)
 
-    def is_cavity_capability_supported(self, cavity: str, feature) -> bool:
+    def is_cavity_capability_supported(self, cavity: str, feature: str | list[str]) -> bool:
         """Return True if the appliance supports this cavity capability or any capability in a list."""
         cavity_capabilities = self.capabilities.get(cavity)
         if cavity_capabilities is None:

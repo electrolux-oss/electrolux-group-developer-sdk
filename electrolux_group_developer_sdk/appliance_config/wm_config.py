@@ -1,6 +1,6 @@
 """Washer Machine configuration."""
 import datetime
-from typing import Any
+from typing import Any, Optional
 from zoneinfo import ZoneInfo
 
 from .config import ApplianceConfig
@@ -196,7 +196,7 @@ class WmConfig(ApplianceConfig):
             self.get_property(TANK_B_RESERVE)
         )
 
-    def get_current_start_at_stop_at(self, reported_appliance_state: dict[str, Any]) -> tuple[datetime, datetime]:
+    def get_current_start_at_stop_at(self, reported_appliance_state: dict[str, Any]) -> tuple[Optional[datetime.datetime], Optional[datetime.datetime]]:
         """Get the current start at time and end at time from the reported state."""
         appliance_state = self.get_current_appliance_state(reported_appliance_state)
 

@@ -13,7 +13,7 @@ class ApplianceConfig(BaseModel):
         """Return the state given a specific key."""
         return reported_appliance_state.get(key) if (key := self.get_property(state_key)) else None
 
-    def is_capability_supported(self, feature):
+    def is_capability_supported(self, feature: str | list[str]):
         """Return True if the appliance supports this capability or any capability in a list."""
         if isinstance(feature, str):
             key = self.get_property(feature)
