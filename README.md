@@ -43,9 +43,11 @@ from electrolux_group_developer_sdk.client.appliance_client import ApplianceClie
 
 
 # Callback to handle token updates
-def on_token_update(new_access_token, new_refresh_token):
+def on_token_update(new_access_token, new_refresh_token,api_key):
     # Save updated tokens somewhere safe
-    print("Tokens updated:", new_access_token, new_refresh_token)
+    print("Access Token updated:", new_access_token)
+    print("Refresh Token updated:", new_refresh_token)
+    print("API Key:", api_key)
 
 async def main():
     # Initialize the token manager
