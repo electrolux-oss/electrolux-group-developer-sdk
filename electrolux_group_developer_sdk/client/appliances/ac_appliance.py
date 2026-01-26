@@ -5,7 +5,7 @@ from pydantic import PrivateAttr
 from .appliance_data import ApplianceData
 from ...appliance_config.ac_config import AcConfig, AcConfigManager, FAN_SPEED_SETTING, MODE, TARGET_TEMPERATURE_C, \
     TARGET_TEMPERATURE_F, EXECUTE_COMMAND
-from ...constants import REPORTED
+from ...constants import CELSIUS, FAHRENHEIT, REPORTED
 
 
 class ACAppliance(ApplianceData):
@@ -50,7 +50,20 @@ class ACAppliance(ApplianceData):
 
     def get_current_temperature_unit(self) -> str:
         """Return the current temperature unit."""
-        return self._config.get_current_temperature_unit(self.state.properties.get(REPORTED))
+
+        temperature_unit = self._config.get_current_temperature_unit(self.state.properties.get(REPORTED))
+
+        if temperature_unit is not None:
+            return temperature_unit
+        
+        celsiusSupported = self._config.is_capability_supported(TARGET_TEMPERATURE_C)
+        fahrenheitSupported = self._config.is_capability_supported(TARGET_TEMPERATURE_F)
+        
+        if (not celsiusSupported) and fahrenheitSupported:
+            return FAHRENHEIT
+
+        return CELSIUS
+
 
     def get_current_target_temperature_c(self) -> float:
         """Return the current target temperature in Celsius."""

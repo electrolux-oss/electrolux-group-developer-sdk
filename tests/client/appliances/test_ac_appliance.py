@@ -70,8 +70,35 @@ def test_get_step_target_temperature(ac_appliance):
     assert ac_appliance.get_supported_step_temp() == 1.0
 
 
-def test_get_current_unit(ac_appliance):
+def test_get_current_unit_from_state(ac_appliance):
     assert ac_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_state_fahrenheit(ac_appliance):
+    ac_appliance.state.properties["reported"]["temperatureRepresentation"] = "FAHRENHEIT"
+
+    assert ac_appliance.get_current_temperature_unit() == "FAHRENHEIT"
+
+
+def test_get_current_unit_from_capabilities(ac_appliance):
+    ac_appliance.state.properties["reported"].pop("temperatureRepresentation")
+
+    assert ac_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_capabilities_default(ac_appliance):
+    ac_appliance.state.properties["reported"].pop("temperatureRepresentation")
+    ac_appliance._config.capabilities.pop("targetTemperatureC", "")
+    ac_appliance._config.capabilities.pop("targetTemperatureF", "")
+
+    assert ac_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_capabilities_fahrenheit(ac_appliance):
+    ac_appliance.state.properties["reported"].pop("temperatureRepresentation")
+    ac_appliance._config.capabilities.pop("targetTemperatureC", "")
+
+    assert ac_appliance.get_current_temperature_unit() == "FAHRENHEIT"
 
 
 def test_get_current_target_temperature_c(ac_appliance):

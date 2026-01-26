@@ -117,8 +117,36 @@ def test_get_current_appliance_state(ov_appliance):
     assert ov_appliance.get_current_appliance_state() == "DELAYED_START"
 
 
-def test_get_current_temperature_unit(ov_appliance):
+def test_get_current_unit_from_state(ov_appliance):
     assert ov_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_state_fahrenheit(ov_appliance):
+    ov_appliance.state.properties["reported"]["temperatureRepresentation"] = "FAHRENHEIT"
+
+    assert ov_appliance.get_current_temperature_unit() == "FAHRENHEIT"
+
+
+def test_get_current_unit_from_capabilities(ov_appliance):
+    ov_appliance.state.properties["reported"].pop("temperatureRepresentation")
+
+    assert ov_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_capabilities_default(ov_appliance):
+    ov_appliance.state.properties["reported"].pop("temperatureRepresentation")
+    ov_appliance._config.capabilities.pop("targetTemperatureC", "")
+    ov_appliance._config.capabilities.pop("targetTemperatureF", "")
+
+    assert ov_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_capabilities_fahrenheit(ov_appliance):
+    ov_appliance.state.properties["reported"].pop("temperatureRepresentation")
+    ov_appliance._config.capabilities.pop("targetTemperatureC", "")
+    ov_appliance._config.capabilities["targetTemperatureF"] = dict()
+
+    assert ov_appliance.get_current_temperature_unit() == "FAHRENHEIT"
 
 
 def test_get_current_target_temperature_c(ov_appliance):

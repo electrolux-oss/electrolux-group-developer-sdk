@@ -4,9 +4,9 @@ from typing import Any, Optional
 from pydantic import PrivateAttr
 
 from .appliance_data import ApplianceData
-from ...appliance_config.so_config import SoConfigManager, SoConfig, PROGRAM, TARGET_TEMPERATURE_C, \
+from ...appliance_config.so_config import BOTTOM_OVEN, UPPER_OVEN, SoConfigManager, SoConfig, PROGRAM, TARGET_TEMPERATURE_C, \
     TARGET_TEMPERATURE_F, EXECUTE_COMMAND, TARGET_DURATION, CAVITY_LIGHT
-from ...constants import REPORTED, MIN, MAX, STEP
+from ...constants import CELSIUS, FAHRENHEIT, REPORTED, MIN, MAX, STEP
 
 
 class SOAppliance(ApplianceData):
@@ -141,7 +141,20 @@ class SOAppliance(ApplianceData):
 
     def get_current_temperature_unit(self) -> str:
         """Return the current temperature unit."""
-        return self._config.get_current_temperature_unit(self.state.properties.get(REPORTED))
+        temperature_unit = self._config.get_current_temperature_unit(self.state.properties.get(REPORTED))
+
+        if temperature_unit is not None:
+            return temperature_unit
+
+        celsiusSupported = (self._config.is_cavity_capability_supported(UPPER_OVEN, TARGET_TEMPERATURE_C) 
+                            or self._config.is_cavity_capability_supported(BOTTOM_OVEN, TARGET_TEMPERATURE_C))
+        fahrenheitSupported = (self._config.is_cavity_capability_supported(UPPER_OVEN, TARGET_TEMPERATURE_F) 
+                               or self._config.is_cavity_capability_supported(BOTTOM_OVEN, TARGET_TEMPERATURE_F))
+        
+        if (not celsiusSupported) and fahrenheitSupported:
+            return FAHRENHEIT
+
+        return CELSIUS
 
     def get_program_command(self, cavity: str, program: str) -> dict[str, Any]:
         """Return the command payload to set the cavity program."""

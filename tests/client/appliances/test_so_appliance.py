@@ -226,7 +226,45 @@ def test_get_current_cavity_appliance_state(so_appliance, cavity, expected_resul
     assert so_appliance.get_current_cavity_appliance_state(cavity) == expected_result
 
 
-def test_get_current_temperature_unit(so_appliance):
+def test_get_current_unit_from_state(so_appliance):
+    assert so_appliance.get_current_temperature_unit() == "FAHRENHEIT"
+
+
+def test_get_current_unit_from_state_celsius(so_appliance):
+    so_appliance.state.properties["reported"]["temperatureRepresentation"] = "CELSIUS"
+
+    assert so_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_capabilities(so_appliance):
+    so_appliance.state.properties["reported"].pop("temperatureRepresentation")
+
+    assert so_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_capabilities_default(so_appliance):
+    so_appliance.state.properties["reported"].pop("temperatureRepresentation")
+    so_appliance._config.capabilities["upperOven"].pop("targetTemperatureC", "")
+    so_appliance._config.capabilities["upperOven"].pop("targetTemperatureF", "")
+    so_appliance._config.capabilities["bottomOven"].pop("targetTemperatureC", "")
+    so_appliance._config.capabilities["bottomOven"].pop("targetTemperatureF", "")
+
+    assert so_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_capabilities_celsius(so_appliance):
+    so_appliance.state.properties["reported"].pop("temperatureRepresentation")
+    so_appliance._config.capabilities["upperOven"].pop("targetTemperatureF", "")
+    so_appliance._config.capabilities["bottomOven"].pop("targetTemperatureF", "")
+
+    assert so_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_capabilities_fahrenheit(so_appliance):
+    so_appliance.state.properties["reported"].pop("temperatureRepresentation")
+    so_appliance._config.capabilities["upperOven"].pop("targetTemperatureC", "")
+    so_appliance._config.capabilities["bottomOven"].pop("targetTemperatureC", "")
+
     assert so_appliance.get_current_temperature_unit() == "FAHRENHEIT"
 
 

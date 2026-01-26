@@ -94,8 +94,47 @@ def test_get_supported_extra_cavity_temperature(cr_appliance):
                                                                      7.0]
 
 
-def test_get_current_temperature_unit(cr_appliance):
+def test_get_current_unit_from_state(cr_appliance):
     assert cr_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_state_fahrenheit(cr_appliance):
+    cr_appliance.state.properties["reported"]["temperatureRepresentation"] = "FAHRENHEIT"
+
+    assert cr_appliance.get_current_temperature_unit() == "FAHRENHEIT"
+
+
+def test_get_current_unit_from_capabilities(cr_appliance):
+    cr_appliance.state.properties["reported"].pop("temperatureRepresentation")
+
+    assert cr_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_capabilities_default(cr_appliance):
+    cr_appliance.state.properties["reported"].pop("temperatureRepresentation")
+    cr_appliance._config.capabilities["fridge"].pop("targetTemperatureC", "")
+    cr_appliance._config.capabilities["fridge"].pop("targetTemperatureF", "")
+    cr_appliance._config.capabilities["freezer"].pop("targetTemperatureC", "")
+    cr_appliance._config.capabilities["freezer"].pop("targetTemperatureF", "")
+
+    assert cr_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_capabilities_celsius(cr_appliance):
+    cr_appliance.state.properties["reported"].pop("temperatureRepresentation")
+    cr_appliance._config.capabilities["fridge"].pop("targetTemperatureF", "")
+    cr_appliance._config.capabilities["freezer"].pop("targetTemperatureF", "")
+
+    assert cr_appliance.get_current_temperature_unit() == "CELSIUS"
+
+
+def test_get_current_unit_from_capabilities_fahrenheit(cr_appliance):
+    cr_appliance.state.properties["reported"].pop("temperatureRepresentation")
+    cr_appliance._config.capabilities["fridge"].pop("targetTemperatureC", "")
+    cr_appliance._config.capabilities["freezer"].pop("targetTemperatureC", "")
+    cr_appliance._config.capabilities["fridge"]["targetTemperatureF"] = dict()
+
+    assert cr_appliance.get_current_temperature_unit() == "FAHRENHEIT"
 
 
 def test_get_current_alerts(cr_appliance):

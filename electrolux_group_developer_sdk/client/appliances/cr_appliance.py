@@ -2,10 +2,10 @@ from typing import Any
 
 from pydantic import PrivateAttr
 
-from ...appliance_config.cr_config import CrConfig, CrConfigManager, TARGET_TEMPERATURE_F, TARGET_TEMPERATURE_C, \
+from ...appliance_config.cr_config import FREEZER, FRIDGE, CrConfig, CrConfigManager, TARGET_TEMPERATURE_F, TARGET_TEMPERATURE_C, \
     VACATION_HOLIDAY_MODE
 from ...client.appliances.appliance_data import ApplianceData
-from ...constants import REPORTED, MIN, MAX, STEP
+from ...constants import CELSIUS, FAHRENHEIT, REPORTED, MIN, MAX, STEP
 
 
 class CRAppliance(ApplianceData):
@@ -49,7 +49,20 @@ class CRAppliance(ApplianceData):
 
     def get_current_temperature_unit(self) -> str:
         """Get the current temperature unit from the reported state."""
-        return self._config.get_current_temperature_unit(self.state.properties.get(REPORTED))
+        temperature_unit = self._config.get_current_temperature_unit(self.state.properties.get(REPORTED))
+
+        if temperature_unit is not None:
+            return temperature_unit
+
+        celsiusSupported = (self._config.is_cavity_capability_supported(FRIDGE, TARGET_TEMPERATURE_C) 
+                            or self._config.is_cavity_capability_supported(FREEZER, TARGET_TEMPERATURE_C))
+        fahrenheitSupported = (self._config.is_cavity_capability_supported(FRIDGE, TARGET_TEMPERATURE_F) 
+                               or self._config.is_cavity_capability_supported(FREEZER, TARGET_TEMPERATURE_F))
+        
+        if (not celsiusSupported) and fahrenheitSupported:
+            return FAHRENHEIT
+
+        return CELSIUS
 
     def get_current_alerts(self) -> str:
         """Get the current alerts from the reported state."""

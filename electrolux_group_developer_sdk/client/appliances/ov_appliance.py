@@ -6,7 +6,7 @@ from pydantic import PrivateAttr
 from .appliance_data import ApplianceData
 from ...appliance_config.ov_config import OvConfig, OvConfigManager, PROGRAM, TARGET_TEMPERATURE_C, \
     TARGET_TEMPERATURE_F, EXECUTE_COMMAND, TARGET_DURATION, CAVITY_LIGHT
-from ...constants import REPORTED, MIN, MAX, STEP
+from ...constants import CELSIUS, FAHRENHEIT, REPORTED, MIN, MAX, STEP
 
 
 class OVAppliance(ApplianceData):
@@ -65,7 +65,18 @@ class OVAppliance(ApplianceData):
 
     def get_current_temperature_unit(self) -> str:
         """Return the current temperature unit."""
-        return self._config.get_current_temperature_unit(self.state.properties.get(REPORTED))
+        temperature_unit = self._config.get_current_temperature_unit(self.state.properties.get(REPORTED))
+
+        if temperature_unit is not None:
+            return temperature_unit
+        
+        celsiusSupported = self._config.is_capability_supported(TARGET_TEMPERATURE_C)
+        fahrenheitSupported = self._config.is_capability_supported(TARGET_TEMPERATURE_F)
+        
+        if (not celsiusSupported) and fahrenheitSupported:
+            return FAHRENHEIT
+
+        return CELSIUS
 
     def get_current_target_temperature_c(self) -> float:
         """Return the current target temperature in Celsius."""
