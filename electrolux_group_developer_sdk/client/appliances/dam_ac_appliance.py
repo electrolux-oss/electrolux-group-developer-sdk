@@ -28,6 +28,16 @@ class DAMACAppliance(ApplianceData):
     def is_air_conditioner_feature_supported(self, feature: str) -> bool:
         return self._config.is_air_conditioner_capability_supported(feature)
 
+    def get_feature_state_string_options(self, feature: str) -> list[str]:
+        return self._config.get_feature_state_string_options(feature)
+
+    def get_air_conditioner_feature_state_string_options(self, feature: str) -> list[str]:
+        """Get the possible string values the property of an air conditioner feature can be.
+
+        This method is only usable for string type features."""
+
+        return self._config.get_air_conditioner_feature_state_string_options(feature)
+
     def get_supported_modes(self) -> list[str]:
         """Return a list of supported modes."""
         return self._config.get_supported_modes()

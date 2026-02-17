@@ -9,7 +9,7 @@ from electrolux_group_developer_sdk.appliance_config.ap_config import PM_2_5
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.ap_appliance import APAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import FAN_SPEED
+from electrolux_group_developer_sdk.feature_constants import FAN_SPEED, WORKMODE
 
 
 def load_json(file_path):
@@ -41,6 +41,14 @@ def test_is_feature_supported_true(ap_appliance):
 
 def test_is_feature_supported_false(ap_appliance):
     assert ap_appliance.is_feature_supported("invalid_cap") is False
+
+
+def test_get_feature_state_string_options_string_cap(ap_appliance):
+    assert len(ap_appliance.get_feature_state_string_options(WORKMODE)) == 4
+
+
+def test_get_feature_state_string_options_non_string_cap(ap_appliance):
+    assert len(ap_appliance.get_feature_state_string_options(FAN_SPEED)) == 0
 
 
 def test_get_air_quality_map(ap_appliance):

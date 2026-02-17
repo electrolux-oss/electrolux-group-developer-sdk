@@ -8,7 +8,7 @@ import pytest
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.dam_ac_appliance import DAMACAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import AMBIENT_TEMPERATURE, MODE
+from electrolux_group_developer_sdk.feature_constants import AMBIENT_TEMPERATURE, APPLIANCE_STATE, MODE, TARGET_TEMPERATURE
 
 
 def load_json(file_path):
@@ -48,6 +48,18 @@ def test_is_ac_feature_supported_true(dam_ac_appliance):
 
 def test_is_ac_feature_supported_false(dam_ac_appliance):
     assert dam_ac_appliance.is_air_conditioner_feature_supported("invalid_cap") is False
+
+
+def test_get_feature_state_string_options_non_string_cap(dam_ac_appliance):
+    assert len(dam_ac_appliance.get_feature_state_string_options(AMBIENT_TEMPERATURE)) == 0
+
+
+def test_get_air_conditioner_feature_state_string_options_string_cap(dam_ac_appliance):
+    assert len(dam_ac_appliance.get_air_conditioner_feature_state_string_options(APPLIANCE_STATE)) == 2
+
+
+def test_get_air_conditioner_feature_state_string_options_non_string_cap(dam_ac_appliance):
+    assert len(dam_ac_appliance.get_air_conditioner_feature_state_string_options(TARGET_TEMPERATURE)) == 0
 
 
 def test_supported_modes(dam_ac_appliance):

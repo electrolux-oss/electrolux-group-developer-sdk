@@ -9,7 +9,7 @@ from freezegun import freeze_time
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.wd_appliance import WDAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import TANK_B_DET_LOAD_FOR_NOMINAL_WEIGHT_CAPABILITY, \
+from electrolux_group_developer_sdk.feature_constants import APPLIANCE_STATE, STOP_TIME, TANK_B_DET_LOAD_FOR_NOMINAL_WEIGHT_CAPABILITY, \
     AD_TANK_B_DET_LOADED_CAPABILITY
 
 
@@ -42,6 +42,14 @@ def test_is_feature_supported_true(wd_appliance):
 
 def test_is_feature_supported_false(wd_appliance):
     assert wd_appliance.is_feature_supported(AD_TANK_B_DET_LOADED_CAPABILITY) is False
+
+
+def test_get_feature_state_string_options_string_cap(wd_appliance):
+    assert len(wd_appliance.get_feature_state_string_options(APPLIANCE_STATE)) == 8
+
+
+def test_get_feature_state_string_options_non_string_cap(wd_appliance):
+    assert len(wd_appliance.get_feature_state_string_options(STOP_TIME)) == 0
 
 
 def test_get_supported_programs(wd_appliance):

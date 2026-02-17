@@ -24,6 +24,9 @@ class DHAppliance(ApplianceData):
     def is_feature_supported(self, feature: str | list[str]) -> bool:
         return self._config.is_capability_supported(feature)
 
+    def get_feature_state_string_options(self, feature: str) -> list[str]:
+        return self._config.get_feature_state_string_options(feature)
+
     def is_appliance_on(self) -> bool:
         """Return True if the appliance is ON, False otherwise."""
         return self._config.is_appliance_on(self.state.properties.get(REPORTED))

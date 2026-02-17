@@ -30,6 +30,23 @@ class HBAppliance(ApplianceData):
     def is_hob_zone_feature_supported(self, hob_zone: str, feature: str) -> bool:
         return self._config.is_hob_zone_capability_supported(hob_zone, feature)
 
+    def get_feature_state_string_options(self, feature: str) -> list[str]:
+        return self._config.get_feature_state_string_options(feature)
+
+    def get_hood_feature_state_string_options(self, feature: str) -> list[str]:
+        """Get the possible string values the property of a hood feature can be.
+
+        This method is only usable for string type features."""
+
+        return self._config.get_hood_feature_state_string_options(feature)
+
+    def get_hob_zone_feature_state_string_options(self, hob_zone:str, feature: str) -> list[str]:
+        """Get the possible string values the property of a hob zone feature can be.
+
+        This method is only usable for string type features."""
+
+        return self._config.get_hob_zone_feature_state_string_options(hob_zone, feature)
+
     def get_supported_hood_fan_speed(self) -> list[str]:
         """Return the list of supported hood fan speed."""
         return self._config.get_supported_hood_fan_speed()

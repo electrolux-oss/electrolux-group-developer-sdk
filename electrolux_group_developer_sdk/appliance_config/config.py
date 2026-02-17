@@ -2,6 +2,8 @@ from typing import Any
 
 from pydantic import BaseModel
 
+from ..constants import TYPE, TYPE_STRING, VALUES
+
 
 class ApplianceConfig(BaseModel):
     """Base appliance config class."""
@@ -29,3 +31,25 @@ class ApplianceConfig(BaseModel):
     def get_property(self, key: str) -> str:
         """Return the appliance type specific key."""
         return self.mapping.get(key)
+    
+    def get_feature_state_string_options(self, feature: str) -> list[str]:
+        """Get the possible string values the property of a feature can be.
+        
+        This method is only usable for string type features."""
+        capability = self.capabilities.get(self.get_property(feature))
+
+        return self._get_capability_state_string_options(capability)
+    
+    def _get_capability_state_string_options(self, capability: dict[str, Any] | None) -> list[str]:
+        """Get the possible string values the property of a feature can be. 
+
+        This method is only usable for string type features."""
+        if capability == None:
+            return []
+
+        if capability.get(TYPE) == TYPE_STRING:
+            values = capability.get(VALUES, {})
+            return [setting for setting in values]
+        
+        return []
+

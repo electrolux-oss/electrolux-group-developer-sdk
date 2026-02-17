@@ -2,7 +2,7 @@
 from typing import Any
 
 from .config import ApplianceConfig
-from ..constants import VALUES, MIN, MAX, STEP, FAHRENHEIT, CR
+from ..constants import TYPE, TYPE_STRING, VALUES, MIN, MAX, STEP, FAHRENHEIT, CR
 from ..feature_constants import *
 
 # cavities
@@ -61,6 +61,19 @@ class CrConfig(ApplianceConfig):
                     return True
             return False
         return False
+
+    def get_cavity_feature_state_string_options(self, cavity: str, feature: str) -> list[str]:
+        """Get the possible string values the property of a cavity feature can be.
+
+        This method is only usable for string type features."""
+
+        cavity_capabilities = self.capabilities.get(cavity)
+        if cavity_capabilities is None:
+            return []
+
+        capability = cavity_capabilities.get(self.get_property(feature))
+
+        return self._get_capability_state_string_options(capability)
 
     def get_supported_cavities(self) -> list[str]:
         """Get supported cavities name from the capabilities."""

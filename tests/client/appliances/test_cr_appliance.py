@@ -8,7 +8,7 @@ import pytest
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.cr_appliance import CRAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import AIR_FILTER_STATE, APPLIANCE_STATE
+from electrolux_group_developer_sdk.feature_constants import AIR_FILTER_STATE, APPLIANCE_STATE, TARGET_TEMPERATURE_C, TEMPERATURE_REPRESENTATION
 
 
 def load_json(file_path):
@@ -48,6 +48,18 @@ def test_is_cavity_feature_supported_true(cr_appliance):
 
 def test_is_cavity_feature_supported_false(cr_appliance):
     assert cr_appliance.is_cavity_feature_supported("invalid_cavity", APPLIANCE_STATE) is False
+
+
+def test_get_feature_state_string_options_string_cap(cr_appliance):
+    assert len(cr_appliance.get_feature_state_string_options(TEMPERATURE_REPRESENTATION)) == 1
+
+
+def test_get_cavity_feature_state_string_options_string_cap(cr_appliance):
+    assert len(cr_appliance.get_cavity_feature_state_string_options("extraCavity", APPLIANCE_STATE)) == 2
+
+
+def test_get_cavity_feature_state_string_options_non_string_cap(cr_appliance):
+    assert len(cr_appliance.get_cavity_feature_state_string_options("extraCavity", TARGET_TEMPERATURE_C)) == 0
 
 
 def test_get_supported_cavities(cr_appliance):

@@ -9,7 +9,7 @@ from freezegun import freeze_time
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.ov_appliance import OVAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import PROGRAM
+from electrolux_group_developer_sdk.feature_constants import APPLIANCE_STATE, PROGRAM, TARGET_TEMPERATURE_C
 
 
 def load_json(file_path):
@@ -41,6 +41,14 @@ def test_is_feature_supported_true(ov_appliance):
 
 def test_is_feature_supported_false(ov_appliance):
     assert ov_appliance.is_feature_supported("invalid_cap") is False
+
+
+def test_get_feature_state_string_options_string_cap(ov_appliance):
+    assert len(ov_appliance.get_feature_state_string_options(APPLIANCE_STATE)) == 8
+
+
+def test_get_feature_state_string_options_non_string_cap(ov_appliance):
+    assert len(ov_appliance.get_feature_state_string_options(TARGET_TEMPERATURE_C)) == 0
 
 
 def test_get_supported_programs(ov_appliance):

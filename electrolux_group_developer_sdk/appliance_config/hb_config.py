@@ -55,6 +55,32 @@ class HbConfig(ApplianceConfig):
         hob_zone_capabilities = self.capabilities.get(zone)
         return key is not None and hob_zone_capabilities is not None and key in hob_zone_capabilities
 
+    def get_hood_feature_state_string_options(self, feature: str) -> list[str]:
+        """Get the possible string values the property of a hood feature can be.
+
+        This method is only usable for string type features."""
+
+        hood_capabilities = self.capabilities.get(self.get_property(HOB_HOOD))
+        if hood_capabilities is None:
+            return []
+        
+        capability = hood_capabilities.get(self.get_property(feature))
+        
+        return self._get_capability_state_string_options(capability)
+
+    def get_hob_zone_feature_state_string_options(self, zone: str, feature: str) -> list[str]:
+        """Get the possible string values the property of a hob zone feature can be.
+
+        This method is only usable for string type features."""
+
+        hob_zone_capabilities = self.capabilities.get(zone)
+        if hob_zone_capabilities is None:
+            return []
+        
+        capability = hob_zone_capabilities.get(self.get_property(feature))
+        
+        return self._get_capability_state_string_options(capability)
+
     def get_supported_hood_fan_speed(self) -> list[str]:
         """Get supported hood fan speed."""
         values = self.capabilities.get(self.get_property(HOB_HOOD), {}).get(self.get_property(HOOD_FAN_SPEED), {}).get(

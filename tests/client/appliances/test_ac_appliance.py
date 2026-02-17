@@ -8,7 +8,7 @@ import pytest
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.ac_appliance import ACAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import FAN_SPEED_SETTING
+from electrolux_group_developer_sdk.feature_constants import APPLIANCE_STATE, FAN_SPEED_SETTING, TARGET_TEMPERATURE_C
 
 
 def load_json(file_path):
@@ -40,6 +40,14 @@ def test_is_feature_supported_true(ac_appliance):
 
 def test_is_feature_supported_false(ac_appliance):
     assert ac_appliance.is_feature_supported("invalid_cap") is False
+
+
+def test_get_feature_state_string_options_string_cap(ac_appliance):
+    assert len(ac_appliance.get_feature_state_string_options(APPLIANCE_STATE)) == 2
+
+
+def test_get_feature_state_string_options_non_string_cap(ac_appliance):
+    assert len(ac_appliance.get_feature_state_string_options(TARGET_TEMPERATURE_C)) == 0
 
 
 def test_supported_modes(ac_appliance):

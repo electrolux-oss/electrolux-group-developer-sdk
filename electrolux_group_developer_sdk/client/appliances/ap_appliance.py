@@ -24,6 +24,9 @@ class APAppliance(ApplianceData):
     def is_feature_supported(self, feature: str | list[str]) -> bool:
         return self._config.is_capability_supported(feature)
 
+    def get_feature_state_string_options(self, feature: str) -> list[str]:
+        return self._config.get_feature_state_string_options(feature)
+
     def get_air_quality_map(self) -> dict[str, str]:
         """Return the air quality map."""
         return self._config.get_air_quality_map()

@@ -8,7 +8,7 @@ import pytest
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.hd_appliance import HDAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import LIGHT_INTENSITY
+from electrolux_group_developer_sdk.feature_constants import APPLIANCE_STATE, LIGHT_INTENSITY
 
 
 def load_json(file_path):
@@ -40,6 +40,14 @@ def test_is_feature_supported_true(hd_appliance):
 
 def test_is_feature_supported_false(hd_appliance):
     assert hd_appliance.is_feature_supported("invalid_cap") is False
+
+
+def test_get_feature_state_string_options_string_cap(hd_appliance):
+    assert len(hd_appliance.get_feature_state_string_options(APPLIANCE_STATE)) == 3
+
+
+def test_get_feature_state_string_options_non_string_cap(hd_appliance):
+    assert len(hd_appliance.get_feature_state_string_options(LIGHT_INTENSITY)) == 0
 
 
 def test_get_supported_hood_fan_level(hd_appliance):

@@ -8,7 +8,7 @@ import pytest
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.hb_appliance import HBAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import CHILD_LOCK, HOOD_STATE, ZONE_RESIDUAL_HEAT_STATE
+from electrolux_group_developer_sdk.feature_constants import ALERTS, APPLIANCE_STATE, CHILD_LOCK, HOB_HOOD_TARGET_DURATION, HOOD_FAN_SPEED, HOOD_STATE, ZONE_HOB_POT_DETECTED, ZONE_RESIDUAL_HEAT_STATE, ZONE_TARGET_DURATION
 
 
 def load_json(file_path):
@@ -56,6 +56,30 @@ def test_is_hob_zone_feature_supported_true(hb_appliance):
 
 def test_is_hob_zone_feature_supported_false(hb_appliance):
     assert hb_appliance.is_hob_zone_feature_supported("hobZone1", "invalid_cap") is False
+
+
+def test_get_feature_state_string_options_string_cap(hb_appliance):
+    assert len(hb_appliance.get_feature_state_string_options(APPLIANCE_STATE)) == 5
+
+
+def test_get_feature_state_string_options_non_string_cap(hb_appliance):
+    assert len(hb_appliance.get_feature_state_string_options(ALERTS)) == 0
+
+
+def test_get_hood_feature_state_string_options_string_cap(hb_appliance):
+    assert len(hb_appliance.get_hood_feature_state_string_options(HOOD_FAN_SPEED)) == 6
+
+
+def test_get_hood_feature_state_string_options_non_string_cap(hb_appliance):
+    assert len(hb_appliance.get_hood_feature_state_string_options(HOB_HOOD_TARGET_DURATION)) == 0
+
+
+def test_get_hob_zone_feature_state_string_options_string_cap(hb_appliance):
+    assert len(hb_appliance.get_hob_zone_feature_state_string_options("hobZone1", ZONE_HOB_POT_DETECTED)) == 4
+
+
+def test_get_hob_zone_feature_state_string_options_non_string_cap(hb_appliance):
+    assert len(hb_appliance.get_hob_zone_feature_state_string_options("hobZone1", ZONE_TARGET_DURATION)) == 0
 
 
 def test_get_supported_hood_fan_speed(hb_appliance):

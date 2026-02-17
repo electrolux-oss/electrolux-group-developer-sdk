@@ -8,7 +8,7 @@ import pytest
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.dw_appliance import DWAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import PROGRAM_CAPABILITY
+from electrolux_group_developer_sdk.feature_constants import APPLIANCE_STATE, PROGRAM_CAPABILITY, START_TIME
 
 
 def load_json(file_path):
@@ -40,6 +40,14 @@ def test_is_feature_supported_true(dw_appliance):
 
 def test_is_feature_supported_false(dw_appliance):
     assert dw_appliance.is_feature_supported("invalid_cap") is False
+
+
+def test_get_feature_state_string_options_string_cap(dw_appliance):
+    assert len(dw_appliance.get_feature_state_string_options(APPLIANCE_STATE)) == 8
+
+
+def test_get_feature_state_string_options_non_string_cap(dw_appliance):
+    assert len(dw_appliance.get_feature_state_string_options(START_TIME)) == 0
 
 
 def test_get_supported_programs(dw_appliance):

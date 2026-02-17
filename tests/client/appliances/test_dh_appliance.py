@@ -8,7 +8,7 @@ import pytest
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.dh_appliance import DHAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import MODE
+from electrolux_group_developer_sdk.feature_constants import APPLIANCE_STATE, MODE, TARGET_HUMIDITY
 
 
 def load_json(file_path):
@@ -40,6 +40,14 @@ def test_is_feature_supported_true(dh_appliance):
 
 def test_is_feature_supported_false(dh_appliance):
     assert dh_appliance.is_feature_supported("invalid_cap") is False
+
+
+def test_get_feature_state_string_options_string_cap(dh_appliance):
+    assert len(dh_appliance.get_feature_state_string_options(APPLIANCE_STATE)) == 2
+
+
+def test_get_feature_state_string_options_non_string_cap(dh_appliance):
+    assert len(dh_appliance.get_feature_state_string_options(TARGET_HUMIDITY)) == 0
 
 
 def test_is_appliance_on(dh_appliance):

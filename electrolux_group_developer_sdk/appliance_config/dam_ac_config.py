@@ -44,6 +44,19 @@ class DamAcConfig(ApplianceConfig):
         ac_capabilities = self._get_air_conditioner_capabilities()
         return key is not None and ac_capabilities is not None and key in ac_capabilities
 
+    def get_air_conditioner_feature_state_string_options(self, feature: str) -> list[str]:
+        """Get the possible string values the property of an air conditioner feature can be.
+
+        This method is only usable for string type features."""
+
+        air_conditioner_capabilities = self._get_air_conditioner_capabilities()
+        if air_conditioner_capabilities is None:
+            return []
+        
+        capability = air_conditioner_capabilities.get(self.get_property(feature))
+        
+        return self._get_capability_state_string_options(capability)
+
     def get_supported_modes(self) -> list[str]:
         """Get appliance modes."""
         key = self.get_property(MODE)

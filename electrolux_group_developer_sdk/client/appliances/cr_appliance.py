@@ -27,6 +27,16 @@ class CRAppliance(ApplianceData):
     def is_cavity_feature_supported(self, cavity: str, feature: str) -> bool:
         return self._config.is_cavity_capability_supported(cavity, feature)
 
+    def get_feature_state_string_options(self, feature: str) -> list[str]:
+        return self._config.get_feature_state_string_options(feature)
+
+    def get_cavity_feature_state_string_options(self, cavity: str, feature: str) -> list[str]:
+        """Get the possible string values the property of a cavity feature can be.
+
+        This method is only usable for string type features."""
+
+        return self._config.get_cavity_feature_state_string_options(cavity, feature)
+
     def get_supported_cavities(self) -> list[str]:
         """Get supported cavities name from the capabilities."""
         return self._config.get_supported_cavities()

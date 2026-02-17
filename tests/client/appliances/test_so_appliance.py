@@ -9,7 +9,7 @@ from freezegun import freeze_time
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.so_appliance import SOAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import REMOTE_CONTROL, APPLIANCE_STATE
+from electrolux_group_developer_sdk.feature_constants import REMOTE_CONTROL, APPLIANCE_STATE, TARGET_TEMPERATURE_C, TEMPERATURE_REPRESENTATION
 
 
 def load_json(file_path):
@@ -49,6 +49,18 @@ def test_is_cavity_feature_supported_true(so_appliance):
 
 def test_is_cavity_feature_supported_false(so_appliance):
     assert so_appliance.is_cavity_feature_supported("invalid_cavity", APPLIANCE_STATE) is False
+
+
+def test_get_feature_state_string_options_string_cap(so_appliance):
+    assert len(so_appliance.get_feature_state_string_options(TEMPERATURE_REPRESENTATION)) == 2
+
+
+def test_get_cavity_feature_state_string_options_string_cap(so_appliance):
+    assert len(so_appliance.get_cavity_feature_state_string_options("bottomOven", APPLIANCE_STATE)) == 6
+
+
+def test_get_cavity_feature_state_string_options_non_string_cap(so_appliance):
+    assert len(so_appliance.get_cavity_feature_state_string_options("bottomOven", TARGET_TEMPERATURE_C)) == 0
 
 
 @pytest.mark.parametrize(

@@ -5,10 +5,11 @@ from typing import cast
 
 import pytest
 
+from electrolux_group_developer_sdk.appliance_config.rvc_config import POWER_MODE
 from electrolux_group_developer_sdk.client.appliance_data_factory import appliance_data_factory
 from electrolux_group_developer_sdk.client.appliances.rvc_appliance import RVCAppliance
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
-from electrolux_group_developer_sdk.feature_constants import MODE
+from electrolux_group_developer_sdk.feature_constants import CLEANING_COMMAND, MODE
 
 
 def load_json(file_path):
@@ -40,6 +41,14 @@ def test_is_feature_supported_true(rvc_appliance):
 
 def test_is_feature_supported_false(rvc_appliance):
     assert rvc_appliance.is_feature_supported("invalid_cap") is False
+
+
+def test_get_feature_state_string_options_string_cap(rvc_appliance):
+    assert len(rvc_appliance.get_feature_state_string_options(CLEANING_COMMAND)) == 4
+
+
+def test_get_feature_state_string_options_non_string_cap(rvc_appliance):
+    assert len(rvc_appliance.get_feature_state_string_options(POWER_MODE)) == 0
 
 
 def test_get_supported_modes(rvc_appliance):
