@@ -18,12 +18,12 @@ class ApplianceData(BaseModel):
     def update_state(self, state: ApplianceState) -> None:
         self.state = state
     
-    @abstractmethod
     def is_feature_supported(self, feature: str | list[str]) -> bool:
         """Check if a feature is supported for the appliance."""
+        return False
     
-    @abstractmethod
     def get_feature_state_string_options(self, feature: str) -> list[str]:
         """Get the possible string values the property of a feature can be.
         
         This method is only usable for string type features."""
+        return []
