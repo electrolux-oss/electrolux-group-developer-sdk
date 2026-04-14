@@ -6,10 +6,11 @@ import jwt
 
 from .invalid_credentials_exception import InvalidCredentialsException
 from .invalid_token_exception import InvalidTokenException
+from .token_refresh_failed import TokenRefreshFailedException
 from .auth_data import AuthData
 from ..client.client_util import request
-from ..config import TOKEN_REVOKE_URL, TOKEN_REFRESH_URL
-from ..constants import REFRESH_TOKEN, POST
+from ..config import TOKEN_REVOKE_URL, TOKEN_REFRESH_URL, USER_EMAIL_URL
+from ..constants import GET, REFRESH_TOKEN, POST
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -81,7 +82,7 @@ class TokenManager:
 
         if not auth_data or auth_data.refresh_token is None:
             _LOGGER.error("Refresh token is missing")
-            raise Exception("Missing refresh token")
+            raise InvalidCredentialsException("Missing refresh token")
 
         payload = {REFRESH_TOKEN: auth_data.refresh_token}
 
@@ -102,7 +103,7 @@ class TokenManager:
     async def revoke_token(self) -> bool:
         auth_data = self._auth_data
         if not auth_data or auth_data.refresh_token is None:
-            raise Exception("Missing refresh token")
+            raise InvalidCredentialsException("Missing refresh token")
 
         payload = {REFRESH_TOKEN: auth_data.refresh_token}
 
@@ -119,13 +120,13 @@ class TokenManager:
     async def get_auth_data(self) -> AuthData:
         auth_data = self._auth_data
         if not auth_data or auth_data.access_token is None or auth_data.api_key is None:
-            raise Exception("Missing access token or API key")
+            raise InvalidCredentialsException("Missing access token or API key")
 
         # Check if token is expired
         if not self.is_token_valid():
             refreshed = await self.refresh_token()
             if not refreshed:
-                raise Exception("Token expired and refresh failed")
+                raise TokenRefreshFailedException("Token expired and refresh failed")
             auth_data = self._auth_data
 
         return auth_data

@@ -1,3 +1,4 @@
+from typing import Optional
 from .appliances.ac_appliance import ACAppliance
 from .appliances.ap_appliance import APAppliance
 from .appliances.cr_appliance import CRAppliance
@@ -59,8 +60,8 @@ APPLIANCE_TYPE_CLASS_MAP: dict[str, type[ApplianceData]] = {
 
 def appliance_data_factory(
         appliance: Appliance,
-        details: ApplianceDetails,
-        state: ApplianceState,
+        details: Optional[ApplianceDetails],
+        state: Optional[ApplianceState],
 ) -> ApplianceData:
     """
     Return an instance of the appropriate ApplianceData subclass based on appliance type.

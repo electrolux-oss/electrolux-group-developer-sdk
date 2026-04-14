@@ -10,3 +10,5 @@ SEND_COMMAND_URL = f"{BASE_API_URL}/api/v1/appliances/{{appliance_id}}/command"
 GET_INTERACTIVE_MAPS_URL = f"{BASE_API_URL}/api/v1/appliances/{{appliance_id}}/interactiveMap"
 GET_MEMORY_MAPS_URL = f"{BASE_API_URL}/api/v1/appliances/{{appliance_id}}/memoryMap"
 GET_LIVESTREAM_CONFIG_URL = f"{BASE_API_URL}/api/v1/configurations/livestream"
+
+USER_EMAIL_URL = f"{BASE_API_URL}/api/v1/users/current/email"

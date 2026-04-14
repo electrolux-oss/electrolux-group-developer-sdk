@@ -9,9 +9,13 @@ from yarl import URL
 
 from electrolux_group_developer_sdk.auth.auth_data import AuthData
 from electrolux_group_developer_sdk.client.appliance_client import ApplianceClient
+from electrolux_group_developer_sdk.client.bad_credentials_exception import BadCredentialsException
+from electrolux_group_developer_sdk.client.client_exception import ApplianceClientException
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
 from electrolux_group_developer_sdk.client.dto.appliance_details import ApplianceDetails
 from electrolux_group_developer_sdk.client.dto.appliance_state import ApplianceState
+from electrolux_group_developer_sdk.client.dto.email import Email
+from electrolux_group_developer_sdk.client.failed_connection_exception import FailedConnectionException
 from electrolux_group_developer_sdk.constants import SDK_VERSION, SDK_USER_AGENT
 
 EXTERNAL_USER_AGENT = "external-user-agent"
@@ -62,6 +66,128 @@ class TestApplianceClient():
                 expected = [Appliance(**item) for item in payload]
                 for res in results:
                     assert res == expected
+    
+    @pytest.mark.asyncio
+    async def test_test_connection_success(self):
+        json_path = Path(__file__).parent / "data" / "test_appliances.json"
+        with open(json_path) as f:
+            payload = json.load(f)
+
+        mock_token_manager = MagicMock()
+
+        with patch("electrolux_group_developer_sdk.auth.token_manager.TokenManager", return_value=mock_token_manager):
+            mock_token_manager.get_auth_data = AsyncMock(return_value=AuthData(
+                access_token="mock_access_token",
+                refresh_token="mock_refresh_token",
+                api_key="mock_api_key"
+            ))
+            appliance_client = ApplianceClient(mock_token_manager, EXTERNAL_USER_AGENT)
+
+            with aioresponses() as mocked:
+                # Mock the response for the get appliances
+                url = "https://api.developer.electrolux.one/api/v1/appliances"
+                mocked.get(
+                    url,
+                    payload=payload,
+                )
+
+                await appliance_client.test_connection()
+
+                # Assertions
+                check_header_user_agent(mocked)
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("status, expected_exception", [
+        (401, BadCredentialsException),
+        (403, BadCredentialsException),
+        (504, FailedConnectionException),
+        (429, FailedConnectionException),
+    ])
+    async def test_test_connection_http_error(self, status, expected_exception):
+        mock_token_manager = MagicMock()
+
+        with patch("electrolux_group_developer_sdk.auth.token_manager.TokenManager", return_value=mock_token_manager):
+            mock_token_manager.get_auth_data = AsyncMock(return_value=AuthData(
+                access_token="mock_access_token",
+                refresh_token="mock_refresh_token",
+                api_key="mock_api_key"
+            ))
+            appliance_client = ApplianceClient(mock_token_manager)
+
+            with aioresponses() as mocked:
+                # Mock the response for the get appliances
+                url = "https://api.developer.electrolux.one/api/v1/appliances"
+                mocked.get(
+                    url,
+                    status=status,
+                    repeat=True
+                )
+
+                with pytest.raises(expected_exception):
+                    await appliance_client.test_connection()
+
+    @pytest.mark.asyncio
+    async def test_get_user_email_success(self):
+        json_path = Path(__file__).parent / "data" / "test_user_email.json"
+        with open(json_path) as f:
+            payload = json.load(f)
+
+        mock_token_manager = MagicMock()
+
+        with patch("electrolux_group_developer_sdk.auth.token_manager.TokenManager", return_value=mock_token_manager):
+            mock_token_manager.get_auth_data = AsyncMock(return_value=AuthData(
+                access_token="mock_access_token",
+                refresh_token="mock_refresh_token",
+                api_key="mock_api_key"
+            ))
+            appliance_client = ApplianceClient(mock_token_manager, EXTERNAL_USER_AGENT)
+
+            with aioresponses() as mocked:
+                # Mock the response for the get appliance info
+                url = "https://api.developer.electrolux.one/api/v1/users/current/email"
+                mocked.get(
+                    url,
+                    payload=payload,
+                )
+
+                response = await appliance_client.get_user_email()
+
+                # Assertions
+                expected_email = Email(**payload)
+                assert response == expected_email
+
+                check_header_user_agent(mocked)
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("status, expected_calls", [
+        (401, 1),
+        (403, 1),
+        (504, 3),
+        (429, 3),
+    ])
+    async def test_get_user_email_request_failed(self, status, expected_calls):
+        mock_token_manager = MagicMock()
+
+        with patch("electrolux_group_developer_sdk.auth.token_manager.TokenManager", return_value=mock_token_manager):
+            mock_token_manager.get_auth_data = AsyncMock(return_value=AuthData(
+                access_token="mock_access_token",
+                refresh_token="mock_refresh_token",
+                api_key="mock_api_key"
+            ))
+            appliance_client = ApplianceClient(mock_token_manager)
+
+            with aioresponses() as mocked:
+                # Mock the response for the get appliance info
+                url = "https://api.developer.electrolux.one/api/v1/users/current/email"
+                mocked.get(
+                    url,
+                    status=status,
+                    repeat=True
+                )
+
+                with pytest.raises(ApplianceClientException):
+                    await appliance_client.get_user_email()
+                assert len(mocked.requests[('GET', URL(url))]) == expected_calls
 
     @pytest.mark.asyncio
     async def test_get_appliances_success(self):
