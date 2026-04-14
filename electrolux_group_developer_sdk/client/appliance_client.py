@@ -8,16 +8,21 @@ import aiohttp
 from aiohttp import ClientTimeout, ClientResponseError
 from aiohttp.hdrs import USER_AGENT, AUTHORIZATION
 
+from electrolux_group_developer_sdk.auth.token_refresh_failed import TokenRefreshFailedException
+from electrolux_group_developer_sdk.client.bad_credentials_exception import BadCredentialsException
+
 from .appliance_data_factory import appliance_data_factory
 from .client_exception import ApplianceClientException
 from .client_util import request
 from .dto.appliance import Appliance
 from .dto.appliance_details import ApplianceDetails
 from .dto.appliance_state import ApplianceState
+from .dto.email import Email
 from .dto.interactive_map import InteractiveMap
 from .dto.livestream_config import LivestreamConfig
 from .dto.memory_map import MemoryMap
 from .failed_connection_exception import FailedConnectionException
+from ..auth.invalid_credentials_exception import InvalidCredentialsException
 from ..auth.token_manager import TokenManager
 from ..client.appliances.appliance_data import ApplianceData
 from ..config import (
@@ -28,6 +33,7 @@ from ..config import (
     GET_INTERACTIVE_MAPS_URL,
     GET_MEMORY_MAPS_URL,
     GET_LIVESTREAM_CONFIG_URL,
+    USER_EMAIL_URL,
 )
 from ..constants import API_KEY, GET, PUT, SDK_USER_AGENT, SDK_VERSION
 
@@ -80,15 +86,30 @@ class ApplianceClient:
     async def test_connection(self) -> None:
         try:
             await self._send_authorized_request(GET, GET_APPLIANCES_URL)
-        except ApplianceClientException as e:
+        except (ApplianceClientException, ClientResponseError) as e:
             _LOGGER.error("Test connection failed: %s", e)
+            if e.status in [401, 403]:
+                raise BadCredentialsException("Invalid credentials detected when testing connection.")
             raise FailedConnectionException(f"Failed connection.", status_code=e.status)
-        except ClientResponseError as e:
-            _LOGGER.error("Test connection failed: %s", e)
-            raise FailedConnectionException(f"Failed connection.", status_code=e.status)
+        except (InvalidCredentialsException, TokenRefreshFailedException) as e:
+            raise BadCredentialsException("Invalid credentials detected when testing connection.")
         except Exception as e:
             _LOGGER.error("Test connection failed: %s", e)
             raise FailedConnectionException("Failed connection.")
+    
+    async def get_user_email(self) -> Email:
+        """Get the email address of the user that the credentials belong to"""
+        try:
+            response = await self._send_authorized_request(GET, USER_EMAIL_URL)
+            return Email(**response)
+        except aiohttp.ClientResponseError as e:
+            _LOGGER.error("Error during get user email: %s", e)
+            raise ApplianceClientException(
+                f"Failed to get user email: {e}", status=e.status
+            ) from e
+        except Exception as e:
+            _LOGGER.error("Error during get user email: %s", e)
+            raise ApplianceClientException(f"Failed to get user email: {e}")
 
     async def get_appliance_data(self) -> list[ApplianceData]:
         """Retrieve all the appliances data, returning specific appliance types when available."""

@@ -6,6 +6,7 @@ from aioresponses import aioresponses
 
 from electrolux_group_developer_sdk.auth.invalid_credentials_exception import InvalidCredentialsException
 from electrolux_group_developer_sdk.auth.token_manager import TokenManager
+from electrolux_group_developer_sdk.auth.token_refresh_failed import TokenRefreshFailedException
 
 
 def generate_token(exp_seconds_from_now):
@@ -47,7 +48,7 @@ class TestTokenManager():
         token_manager = TokenManager(ACCESS_TOKEN, "mock_refresh_token", "mock_api_key")
         try:
             token_manager.ensure_credentials()
-        except Exception as e:
+        except InvalidCredentialsException as e:
             pytest.fail(f"ensure_credentials() raised an exception: {e}")
 
     def test_ensure_credentials_api_key_missing(self):
@@ -231,5 +232,5 @@ class TestTokenManager():
                 status=401
             )
 
-            with pytest.raises(Exception):
+            with pytest.raises(TokenRefreshFailedException):
                 await token_manager.get_auth_data()
