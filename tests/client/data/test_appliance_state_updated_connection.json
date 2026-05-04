@@ -1,6 +1,6 @@
 {
   "applianceId": "999011524_00:94700001-443E07021CE1",
-  "connectionState": "connected",
+  "connectionState": "disconnected",
   "status": "enabled",
   "properties": {
     "reported": {
@@ -42,7 +42,7 @@
       },
       "verticalSwing": "OFF",
       "ambientTemperatureC": 22,
-      "connectivityState": "connected"
+      "connectivityState": "disconnected"
     }
   }
 }

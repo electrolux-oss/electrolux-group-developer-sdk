@@ -1,7 +1,7 @@
 import asyncio
 import logging
 import random
-from typing import Optional, Dict, Any, Set
+from typing import Optional, Dict, Any
 
 import aiohttp
 

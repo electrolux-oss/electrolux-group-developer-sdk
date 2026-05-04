@@ -3,7 +3,7 @@ API_KEY = "x-api-key"
 REFRESH_TOKEN = "refreshToken"
 
 SDK_USER_AGENT = "ElectroluxGroupDeveloperSDK"
-SDK_VERSION = "0.4.0"
+SDK_VERSION = "0.5.0"
 
 # Methods
 POST = "POST"

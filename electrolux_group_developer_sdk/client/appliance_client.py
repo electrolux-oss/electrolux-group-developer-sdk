@@ -80,7 +80,7 @@ class ApplianceClient:
                 only the SDK's default user agent is used.
         """
         self._token_manager = token_manager
-        self._sse_listeners: dict[str, list[Callable[[dict], None]]] = {}
+        self._sse_listeners: dict[str, list[Callable[[dict[str, Any]], None]]] = {}
         self._external_user_agent = external_user_agent
 
     async def test_connection(self) -> None:
@@ -436,13 +436,13 @@ class ApplianceClient:
                 _LOGGER.info("Close websession")
                 await websession.close()
 
-    def add_listener(self, appliance_id: str, callback: Callable[[dict], None]) -> None:
+    def add_listener(self, appliance_id: str, callback: Callable[[dict[str, Any]], None]) -> None:
         """Register a callback for a specific appliance."""
         _LOGGER.info("Add listener for: %s", appliance_id)
 
         self._sse_listeners.setdefault(appliance_id, []).append(callback)
 
-    def remove_listener(self, appliance_id: str, callback: Callable[[dict], None]) -> None:
+    def remove_listener(self, appliance_id: str, callback: Callable[[dict[str, Any]], None]) -> None:
         """Unregister a callback."""
         _LOGGER.info("Remove listener for: %s", appliance_id)
 
@@ -472,3 +472,41 @@ class ApplianceClient:
         return await request(
             method=method, url=url, headers=headers, json_body=json_body
         )
+
+def apply_sse_update(state: ApplianceState, event: dict[str, Any]) -> ApplianceState:
+        """Apply an SSE property update into the appliance state dict and returns the updated appliance state."""
+        # Copy state into a dict
+        state_dict = state.model_dump()
+
+        prop = event.get("property")
+        value = event.get("value")
+
+        if prop is None:
+            _LOGGER.warning("Received SSE event without 'property': %s", event)
+            return state
+
+        if value is None:
+            _LOGGER.warning("Received SSE event without 'value': %s", event)
+            return state
+
+        # Special case: top-level connectionState
+        if prop == "connectionState":
+            state_dict["connectionState"] = value
+        else:
+            if prop == "connectivityState":
+                state_dict["connectionState"] = value
+
+            # Normal property update
+            reported = state_dict.setdefault("properties", {}).setdefault(
+                "reported", {}
+            )
+            path = prop.split("/")  # e.g. ["userSelections", "analogSpinSpeed"]
+
+            target = reported
+            for key in path[:-1]:
+                target = target.setdefault(key, {})
+
+            target[path[-1]] = value
+
+        # Rebuild a new ApplianceState model from updated dict
+        return ApplianceState.model_validate(state_dict)

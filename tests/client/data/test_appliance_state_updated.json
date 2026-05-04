@@ -17,7 +17,7 @@
         }
       },
       "mode": "OFF",
-      "fanSpeedSetting": "LOW",
+      "fanSpeedSetting": "HIGH",
       "startTime": 52500,
       "stopTime": -1,
       "sleepMode": "OFF",

@@ -8,7 +8,7 @@ from aioresponses import aioresponses
 from yarl import URL
 
 from electrolux_group_developer_sdk.auth.auth_data import AuthData
-from electrolux_group_developer_sdk.client.appliance_client import ApplianceClient
+from electrolux_group_developer_sdk.client.appliance_client import ApplianceClient, apply_sse_update
 from electrolux_group_developer_sdk.client.bad_credentials_exception import BadCredentialsException
 from electrolux_group_developer_sdk.client.client_exception import ApplianceClientException
 from electrolux_group_developer_sdk.client.dto.appliance import Appliance
@@ -625,3 +625,36 @@ def check_header_user_agent(mocked):
     # Check headers
     assert "User-Agent" in headers
     assert f"external-user-agent {SDK_USER_AGENT}/{SDK_VERSION}" in headers["User-Agent"]
+
+
+def test_apply_sse_update():
+    appliance_state_path = Path(__file__).parent / "data" / "test_appliance_state.json"
+    updated_appliance_state_path = Path(__file__).parent / "data" / "test_appliance_state_updated.json"
+    state_event_path = Path(__file__).parent / "data" / "test_state_event.json"
+
+    with open(appliance_state_path) as f:
+        state = ApplianceState(**json.load(f))
+    with open(updated_appliance_state_path) as f:
+        expected_updated_state = ApplianceState(**json.load(f))
+    with open(state_event_path) as f:
+        state_event = json.load(f)
+    
+    updated_state = apply_sse_update(state, state_event)
+
+    assert updated_state == expected_updated_state
+
+def test_apply_sse_update_connectivity_state():
+    appliance_state_path = Path(__file__).parent / "data" / "test_appliance_state.json"
+    updated_appliance_state_path = Path(__file__).parent / "data" / "test_appliance_state_updated_connection.json"
+    state_event_path = Path(__file__).parent / "data" / "test_state_event_connection.json"
+
+    with open(appliance_state_path) as f:
+        state = ApplianceState(**json.load(f))
+    with open(updated_appliance_state_path) as f:
+        expected_updated_state = ApplianceState(**json.load(f))
+    with open(state_event_path) as f:
+        state_event = json.load(f)
+    
+    updated_state = apply_sse_update(state, state_event)
+
+    assert updated_state == expected_updated_state
