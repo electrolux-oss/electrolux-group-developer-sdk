@@ -1,6 +1,6 @@
 """Structured Oven configuration."""
 import datetime
-from typing import Any
+from typing import Any, Optional
 from zoneinfo import ZoneInfo
 
 from .config import ApplianceConfig
@@ -261,7 +261,7 @@ class SoConfig(ApplianceConfig):
         return self._get_nested_state(cavity, self.get_property(DISPLAY_FOOD_PROBE_TEMPERATURE_C),
                                       reported_appliance_state)
 
-    def get_current_cavity_start_at(self, cavity, reported_appliance_state: dict[str, Any]) -> datetime:
+    def get_current_cavity_start_at(self, cavity, reported_appliance_state: dict[str, Any]) -> Optional[datetime.datetime]:
         """Get the current cavity start at time from the reported state."""
         appliance_state = self.get_current_cavity_appliance_state(cavity, reported_appliance_state)
 
