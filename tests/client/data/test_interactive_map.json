@@ -53,7 +53,7 @@
                     }
                 ],
                 "roomCategory": 0,
-                "powerMode": 0
+                "powerMode": null
             }
         ]
     },
