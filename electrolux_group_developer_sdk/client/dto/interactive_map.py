@@ -13,7 +13,7 @@ class Zone(BaseModel):
     id: str
     zoneType: str
     roomCategory: int
-    powerMode: int
+    powerMode: Optional[int] = None
     vertices: list[Vertices] = Field(default_factory=list)
 
 class InteractiveMap(BaseModel):
