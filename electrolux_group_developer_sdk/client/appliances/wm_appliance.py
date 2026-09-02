@@ -141,12 +141,12 @@ class WMAppliance(ApplianceData):
             self.state.properties.get(REPORTED)
         )
 
-    def get_current_start_at(self) -> datetime:
+    def get_current_start_at(self) -> datetime.datetime:
         """Get the current start at time from the reported state."""
         start_at, end_at = self._config.get_current_start_at_stop_at(self.state.properties.get(REPORTED))
         return start_at
 
-    def get_current_end_at(self) -> datetime:
+    def get_current_end_at(self) -> datetime.datetime:
         """Get the current end at time from the reported state."""
         start_at, end_at = self._config.get_current_start_at_stop_at(self.state.properties.get(REPORTED))
         return end_at

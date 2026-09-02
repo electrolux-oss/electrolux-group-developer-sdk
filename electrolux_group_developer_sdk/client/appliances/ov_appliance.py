@@ -125,7 +125,7 @@ class OVAppliance(ApplianceData):
         """Get the current target duration from the reported state."""
         return self._config.get_current_target_duration(self.state.properties.get(REPORTED))
 
-    def get_current_start_at(self) -> datetime:
+    def get_current_start_at(self) -> datetime.datetime:
         """Get the current start at time from the reported state."""
         return self._config.get_current_start_at(self.state.properties.get(REPORTED))
 
