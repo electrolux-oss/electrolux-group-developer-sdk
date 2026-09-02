@@ -1,9 +1,11 @@
 import asyncio
 import json
+import random
 from pathlib import Path
 from unittest.mock import patch, MagicMock, AsyncMock
 
 import pytest
+import aiohttp
 from aioresponses import aioresponses
 from yarl import URL
 
@@ -15,6 +17,7 @@ from electrolux_group_developer_sdk.client.dto.appliance import Appliance
 from electrolux_group_developer_sdk.client.dto.appliance_details import ApplianceDetails
 from electrolux_group_developer_sdk.client.dto.appliance_state import ApplianceState
 from electrolux_group_developer_sdk.client.dto.email import Email
+from electrolux_group_developer_sdk.client.dto.livestream_config import LivestreamConfig
 from electrolux_group_developer_sdk.client.failed_connection_exception import FailedConnectionException
 from electrolux_group_developer_sdk.constants import SDK_VERSION, SDK_USER_AGENT
 
@@ -658,3 +661,108 @@ def test_apply_sse_update_connectivity_state():
     updated_state = apply_sse_update(state, state_event)
 
     assert updated_state == expected_updated_state
+
+
+@pytest.mark.asyncio
+async def test_start_event_stream_dispatch_and_callbacks():
+    """Verify that start_event_stream invokes opening callbacks and dispatches SSE events to registered listeners."""
+    mock_token_manager = MagicMock()
+    mock_token_manager.get_auth_data = AsyncMock(
+        return_value=AuthData(
+            access_token="mock_token", refresh_token="mock_refresh", api_key="mock_key"
+        )
+    )
+    client = ApplianceClient(mock_token_manager)
+    client.get_livestream_config = AsyncMock(
+        return_value=LivestreamConfig(
+            url="https://api.developer.electrolux.one/livestream", appliances=[]
+        )
+    )
+
+    received_events = []
+    opening_callback_called = []
+
+    async def opening_callback():
+        opening_callback_called.append(True)
+
+    def event_listener(event):
+        received_events.append(event)
+
+    client.add_listener("test_app_1", event_listener)
+
+    # Use native aiohttp.StreamReader to simulate SSE stream
+    protocol = MagicMock()
+    reader = aiohttp.StreamReader(protocol, limit=2**16)
+    reader.feed_data(
+        b'data: {"applianceId": "test_app_1", "property": "timeToEnd", "value": 120}\n\n'
+    )
+    reader.feed_eof()
+
+    mock_resp = MagicMock()
+    mock_resp.closed = False
+    mock_resp.content = reader
+
+    mock_session = MagicMock()
+    mock_session.get.return_value.__aenter__ = AsyncMock(return_value=mock_resp)
+    mock_session.get.return_value.__aexit__ = AsyncMock()
+    mock_session.close = AsyncMock()
+
+    async def fake_sleep(duration):
+        raise asyncio.CancelledError()
+
+    with patch("aiohttp.ClientSession", return_value=mock_session):
+        with patch.object(asyncio, "sleep", side_effect=fake_sleep):
+            with pytest.raises(asyncio.CancelledError):
+                await client.start_event_stream(
+                    do_on_livestream_opening_list=[opening_callback]
+                )
+
+    assert len(opening_callback_called) == 1
+    assert len(received_events) == 1
+    assert received_events[0] == {
+        "applianceId": "test_app_1",
+        "property": "timeToEnd",
+        "value": 120,
+    }
+
+
+@pytest.mark.asyncio
+async def test_start_event_stream_progressive_backoff():
+    """Verify that start_event_stream applies progressive exponential backoff on reconnection attempts."""
+    mock_token_manager = MagicMock()
+    mock_token_manager.get_auth_data = AsyncMock(
+        return_value=AuthData(
+            access_token="mock_token", refresh_token="mock_refresh", api_key="mock_key"
+        )
+    )
+    client = ApplianceClient(mock_token_manager)
+    client.get_livestream_config = AsyncMock(
+        return_value=LivestreamConfig(
+            url="https://api.developer.electrolux.one/livestream", appliances=[]
+        )
+    )
+
+    sleep_calls = []
+
+    async def fake_sleep(duration):
+        sleep_calls.append(duration)
+        if len(sleep_calls) >= 3:
+            raise asyncio.CancelledError()
+
+    mock_session = MagicMock()
+    mock_session.get.side_effect = ConnectionError("Mock connection failed")
+    mock_session.close = AsyncMock()
+
+    with patch("aiohttp.ClientSession", return_value=mock_session):
+        with patch.object(asyncio, "sleep", side_effect=fake_sleep):
+            with patch.object(random, "uniform", return_value=1.0):
+                with pytest.raises(asyncio.CancelledError):
+                    await client.start_event_stream(
+                        initial_backoff=1.0, max_backoff=60.0, backoff_factor=2.0
+                    )
+
+    # Verify exponential progression: 1.0s, 2.0s, 4.0s
+    assert len(sleep_calls) == 3
+    assert sleep_calls[0] == pytest.approx(1.0)
+    assert sleep_calls[1] == pytest.approx(2.0)
+    assert sleep_calls[2] == pytest.approx(4.0)
