@@ -766,3 +766,159 @@ async def test_start_event_stream_progressive_backoff():
     assert sleep_calls[0] == pytest.approx(1.0)
     assert sleep_calls[1] == pytest.approx(2.0)
     assert sleep_calls[2] == pytest.approx(4.0)
+
+
+@pytest.mark.asyncio
+async def test_start_event_stream_closing_callbacks_on_disconnect():
+    """Verify that start_event_stream invokes closing callbacks with the exception when stream disconnects."""
+    mock_token_manager = MagicMock()
+    mock_token_manager.get_auth_data = AsyncMock(
+        return_value=AuthData(
+            access_token="mock_token", refresh_token="mock_refresh", api_key="mock_key"
+        )
+    )
+    client = ApplianceClient(mock_token_manager)
+    client.get_livestream_config = AsyncMock(
+        return_value=LivestreamConfig(
+            url="https://api.developer.electrolux.one/livestream", appliances=[]
+        )
+    )
+
+    closing_calls = []
+
+    async def closing_callback(error):
+        closing_calls.append(error)
+
+    # Use native aiohttp.StreamReader that disconnects after 1 line
+    protocol = MagicMock()
+    reader = aiohttp.StreamReader(protocol, limit=2**16)
+    reader.feed_data(
+        b'data: {"applianceId": "test_app_1", "property": "timeToEnd", "value": 120}\n\n'
+    )
+    reader.feed_eof()
+
+    mock_resp = MagicMock()
+    mock_resp.closed = False
+    mock_resp.content = reader
+
+    mock_session = MagicMock()
+    mock_session.get.return_value.__aenter__ = AsyncMock(return_value=mock_resp)
+    mock_session.get.return_value.__aexit__ = AsyncMock(return_value=False)
+    mock_session.close = AsyncMock()
+
+    async def fake_sleep(duration):
+        raise asyncio.CancelledError()
+
+    with patch("aiohttp.ClientSession", return_value=mock_session):
+        with patch.object(asyncio, "sleep", side_effect=fake_sleep):
+            with pytest.raises(asyncio.CancelledError):
+                await client.start_event_stream(
+                    do_on_livestream_closing_list=[closing_callback]
+                )
+
+    assert len(closing_calls) == 1
+    assert isinstance(closing_calls[0], ConnectionError)
+    assert "closed by server" in str(closing_calls[0])
+
+
+@pytest.mark.asyncio
+async def test_start_event_stream_closing_callbacks_on_config_failure():
+    """Verify that start_event_stream invokes closing callbacks when get_livestream_config fails."""
+    mock_token_manager = MagicMock()
+    client = ApplianceClient(mock_token_manager)
+    config_error = Exception("Livestream configuration service unreachable")
+    client.get_livestream_config = AsyncMock(side_effect=config_error)
+
+    closing_calls = []
+
+    def sync_closing_callback(error):
+        closing_calls.append(error)
+
+    async def fake_sleep(duration):
+        raise asyncio.CancelledError()
+
+    with patch.object(asyncio, "sleep", side_effect=fake_sleep):
+        with pytest.raises(asyncio.CancelledError):
+            await client.start_event_stream(
+                do_on_livestream_closing_list=[sync_closing_callback]
+            )
+
+    assert len(closing_calls) == 1
+    assert closing_calls[0] is config_error
+
+
+@pytest.mark.asyncio
+async def test_start_event_stream_closing_callbacks_signature_flexibility_and_isolation():
+    """Verify closing callbacks support 0 or 1 arg, async or sync, and callback failures don't crash loop."""
+    mock_token_manager = MagicMock()
+    client = ApplianceClient(mock_token_manager)
+    client.get_livestream_config = AsyncMock(side_effect=ConnectionError("DNS failure"))
+
+    no_arg_called = []
+    async_arg_called = []
+    sync_arg_called = []
+    faulty_called = []
+
+    async def async_no_arg():
+        no_arg_called.append(True)
+
+    async def async_one_arg(err):
+        async_arg_called.append(err)
+
+    def sync_one_arg(err):
+        sync_arg_called.append(err)
+
+    def faulty_callback(err):
+        faulty_called.append(True)
+        raise RuntimeError("Buggy consumer callback")
+
+    async def fake_sleep(duration):
+        raise asyncio.CancelledError()
+
+    with patch.object(asyncio, "sleep", side_effect=fake_sleep):
+        with pytest.raises(asyncio.CancelledError):
+            await client.start_event_stream(
+                do_on_livestream_closing_list=[
+                    async_no_arg,
+                    async_one_arg,
+                    sync_one_arg,
+                    faulty_callback,
+                ]
+            )
+
+    assert len(no_arg_called) == 1
+    assert len(async_arg_called) == 1
+    assert isinstance(async_arg_called[0], ConnectionError)
+    assert len(sync_arg_called) == 1
+    assert isinstance(sync_arg_called[0], ConnectionError)
+    assert len(faulty_called) == 1
+
+
+@pytest.mark.asyncio
+async def test_start_event_stream_closing_callbacks_cancellation_propagates():
+    """Verify that task cancellation inside closing callback propagates immediately and aborts the loop."""
+    mock_token_manager = MagicMock()
+    mock_token_manager.get_auth_data = AsyncMock(
+        return_value=AuthData(
+            access_token="mock_token", refresh_token="mock_refresh", api_key="mock_key"
+        )
+    )
+    client = ApplianceClient(mock_token_manager)
+    client.get_livestream_config = AsyncMock(
+        return_value=LivestreamConfig(
+            url="https://api.developer.electrolux.one/livestream", appliances=[]
+        )
+    )
+
+    async def cancelling_callback(err):
+        raise asyncio.CancelledError("Consumer shutdown")
+
+    mock_session = MagicMock()
+    mock_session.get.side_effect = ConnectionError("Mock connection drop")
+    mock_session.close = AsyncMock()
+
+    with patch("aiohttp.ClientSession", return_value=mock_session):
+        with pytest.raises(asyncio.CancelledError):
+            await client.start_event_stream(
+                do_on_livestream_closing_list=[cancelling_callback]
+            )
