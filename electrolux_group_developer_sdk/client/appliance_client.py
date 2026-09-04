@@ -1,8 +1,10 @@
 import asyncio
+import inspect
 import json
 import logging
+import random
 from collections.abc import Awaitable, Callable
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any, List, Union
 
 import aiohttp
 from aiohttp import ClientTimeout, ClientResponseError
@@ -55,6 +57,36 @@ def _build_user_agent(external_user_agent: Optional[str] = None) -> str:
         return f"{external_user_agent} {sdk_user_agent}"
 
     return sdk_user_agent
+
+
+async def _invoke_livestream_callback(
+    callback: Callable[..., Any], error: Optional[BaseException] = None
+) -> None:
+    """Invoke a livestream callback safely, supporting sync/async and 0-or-1 arguments."""
+    try:
+        try:
+            sig = inspect.signature(callback)
+            accepts_args = False
+            for param in sig.parameters.values():
+                if param.kind in (
+                    inspect.Parameter.POSITIONAL_ONLY,
+                    inspect.Parameter.POSITIONAL_OR_KEYWORD,
+                    inspect.Parameter.VAR_POSITIONAL,
+                ):
+                    accepts_args = True
+                    break
+            result = callback(error) if accepts_args else callback()
+        except (ValueError, TypeError):
+            # Fallback for callables where inspect.signature fails (e.g. builtins)
+            try:
+                result = callback(error)
+            except TypeError:
+                result = callback()
+
+        if inspect.isawaitable(result):
+            await result
+    except Exception:
+        _LOGGER.exception("Livestream callback %s failed", callback)
 
 
 class ApplianceClient:
@@ -352,14 +384,55 @@ class ApplianceClient:
             _LOGGER.error("Error during get livestream config: %s", e)
             raise ApplianceClientException(f"Failed to livestream config: {e}")
 
-    async def start_event_stream(self,
-                                 do_on_livestream_opening_list: Optional[List[Callable[[], Awaitable[None]]]] = None):
-        """Open SSE connection and stream appliance events indefinitely."""
-        livestream_config = await self.get_livestream_config()
-        url = livestream_config.url
+    async def start_event_stream(
+        self,
+        do_on_livestream_opening_list: Optional[List[Callable[[], Awaitable[None]]]] = None,
+        do_on_livestream_closing_list: Optional[
+            List[Callable[..., Union[Awaitable[None], None]]]
+        ] = None,
+        initial_backoff: float = 1.0,
+        max_backoff: float = 120.0,
+        backoff_factor: float = 2.0,
+    ) -> None:
+        """Open SSE connection and stream appliance events indefinitely with progressive backoff.
+
+        Args:
+            do_on_livestream_opening_list: Optional list of async callbacks to execute
+                whenever a new SSE connection is established (e.g. to resync state).
+            do_on_livestream_closing_list: Optional list of callbacks (sync or async) to
+                execute whenever an SSE connection is closed or fails (e.g. to update
+                connectivity sensors or trigger backoff in consumers). Callbacks may
+                optionally accept the Exception or None as an argument.
+            initial_backoff: Base delay in seconds before the first reconnection attempt.
+            max_backoff: Maximum backoff delay in seconds.
+            backoff_factor: Multiplier for exponential backoff on consecutive failures.
+        """
+        current_backoff = initial_backoff
 
         while True:
+            try:
+                livestream_config = await self.get_livestream_config()
+                url = livestream_config.url
+            except Exception as ex:
+                _LOGGER.error("Failed to retrieve livestream configuration: %s", ex)
+                if do_on_livestream_closing_list:
+                    _LOGGER.info("Calling do_on_livestream_closing callbacks due to config failure.")
+                    for callback in do_on_livestream_closing_list:
+                        await _invoke_livestream_callback(callback, ex)
+                jitter = random.uniform(0.8, 1.2)
+                sleep_duration = min(current_backoff * jitter, max_backoff)
+                _LOGGER.info(
+                    "Retrying livestream config in %.1fs (backoff: %.1fs)",
+                    sleep_duration,
+                    current_backoff,
+                )
+                await asyncio.sleep(sleep_duration)
+                current_backoff = min(current_backoff * backoff_factor, max_backoff)
+                continue
+
             websession = aiohttp.ClientSession()  # create a new session each retry
+            data_received = False
+            stream_error: Optional[BaseException] = None
             try:
                 auth_data = await self._token_manager.get_auth_data()
                 headers = {
@@ -368,9 +441,9 @@ class ApplianceClient:
                 }
 
                 async with websession.get(
-                        url,
-                        timeout=ClientTimeout(total=None, sock_connect=5, sock_read=None),
-                        headers=headers,
+                    url,
+                    timeout=ClientTimeout(total=None, sock_connect=10, sock_read=120),
+                    headers=headers,
                 ) as resp:
                     _LOGGER.info("Connected to SSE stream at %s", url)
 
@@ -387,9 +460,11 @@ class ApplianceClient:
                                 _LOGGER.warning("SSE connection object closed")
                                 raise ConnectionError("SSE response stream closed unexpectedly")
 
-                            line = await asyncio.wait_for(
-                                resp.content.readline(), timeout=120
-                            )
+                            try:
+                                line = await resp.content.readline()
+                            except (TimeoutError, asyncio.TimeoutError) as ex:
+                                _LOGGER.warning("SSE stream read timed out: %s", ex)
+                                raise ConnectionError("SSE stream read timed out") from ex
 
                             if not line:
                                 _LOGGER.warning("SSE connection ended by server")
@@ -404,6 +479,11 @@ class ApplianceClient:
 
                         if not data_line:
                             continue
+
+                        # Reset backoff on active data stream
+                        if not data_received:
+                            data_received = True
+                            current_backoff = initial_backoff
 
                         try:
                             event = json.loads(data_line)
@@ -424,17 +504,38 @@ class ApplianceClient:
                                 )
 
             except aiohttp.ClientResponseError as ex:
-                _LOGGER.error("SSE error: %s - %s", ex.status, ex.message)
-                await asyncio.sleep(10)
+                stream_error = ex
+                _LOGGER.error("SSE HTTP error: %s - %s", ex.status, ex.message)
             except ConnectionError as ex:
+                stream_error = ex
                 _LOGGER.error("SSE connection error: %s", ex)
-                await asyncio.sleep(10)
+            except asyncio.CancelledError as ex:
+                stream_error = ex
+                raise
             except Exception as ex:
+                stream_error = ex
                 _LOGGER.error("Unexpected SSE error: %s", ex)
-                await asyncio.sleep(10)
             finally:
                 _LOGGER.info("Close websession")
-                await websession.close()
+                try:
+                    await websession.close()
+                except Exception:
+                    pass
+                if do_on_livestream_closing_list:
+                    _LOGGER.info("Calling do_on_livestream_closing callbacks.")
+                    for callback in do_on_livestream_closing_list:
+                        await _invoke_livestream_callback(callback, stream_error)
+
+            # Apply progressive backoff with jitter on reconnect
+            jitter = random.uniform(0.8, 1.2)
+            sleep_duration = min(current_backoff * jitter, max_backoff)
+            _LOGGER.info(
+                "Reconnecting SSE stream in %.1fs (backoff: %.1fs)",
+                sleep_duration,
+                current_backoff,
+            )
+            await asyncio.sleep(sleep_duration)
+            current_backoff = min(current_backoff * backoff_factor, max_backoff)
 
     def add_listener(self, appliance_id: str, callback: Callable[[dict[str, Any]], None]) -> None:
         """Register a callback for a specific appliance."""

@@ -119,7 +119,7 @@ class SOAppliance(ApplianceData):
         """Get the current cavity target duration from the reported state."""
         return self._config.get_current_cavity_target_duration(cavity, self.state.properties.get(REPORTED))
 
-    def get_current_cavity_start_at(self, cavity: str) -> datetime:
+    def get_current_cavity_start_at(self, cavity: str) -> datetime.datetime:
         """Get the current cavity start at time from the reported state."""
         return self._config.get_current_cavity_start_at(cavity, self.state.properties.get(REPORTED))
 
