@@ -922,3 +922,154 @@ async def test_start_event_stream_closing_callbacks_cancellation_propagates():
             await client.start_event_stream(
                 do_on_livestream_closing_list=[cancelling_callback]
             )
+
+
+@pytest.mark.asyncio
+async def test_appliance_client_session_injection():
+    """Verify that ApplianceClient reuses injected ClientSession and does not close it."""
+    mock_token_manager = MagicMock()
+    mock_token_manager.get_auth_data = AsyncMock(
+        return_value=AuthData(
+            access_token="mock_token", refresh_token="mock_refresh", api_key="mock_key"
+        )
+    )
+    async with aiohttp.ClientSession() as session:
+        client = ApplianceClient(mock_token_manager, session=session)
+        assert client._session is session
+
+        with aioresponses() as mocked:
+            url = "https://api.developer.electrolux.one/api/v1/appliances"
+            mocked.get(url, payload=[])
+            appliances = await client.get_appliances()
+            assert appliances == []
+            assert not session.closed
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("status_code", [502, 503])
+async def test_request_retries_on_502_and_503(status_code):
+    """Verify request retries on 502 Bad Gateway and 503 Service Unavailable."""
+    mock_token_manager = MagicMock()
+    mock_token_manager.get_auth_data = AsyncMock(
+        return_value=AuthData(
+            access_token="mock_token", refresh_token="mock_refresh", api_key="mock_key"
+        )
+    )
+    client = ApplianceClient(mock_token_manager)
+    url = "https://api.developer.electrolux.one/api/v1/appliances"
+
+    with patch("asyncio.sleep", new_callable=AsyncMock):
+        with aioresponses() as mocked:
+            mocked.get(url, status=status_code)
+            mocked.get(url, payload=[])
+
+            appliances = await client.get_appliances()
+            assert appliances == []
+            assert len(mocked.requests[("GET", URL(url))]) == 2
+
+
+@pytest.mark.asyncio
+async def test_request_network_error_retry():
+    """Verify request retries on transient aiohttp.ClientError."""
+    mock_token_manager = MagicMock()
+    mock_token_manager.get_auth_data = AsyncMock(
+        return_value=AuthData(
+            access_token="mock_token", refresh_token="mock_refresh", api_key="mock_key"
+        )
+    )
+    client = ApplianceClient(mock_token_manager)
+    url = "https://api.developer.electrolux.one/api/v1/appliances"
+
+    with patch("asyncio.sleep", new_callable=AsyncMock):
+        with aioresponses() as mocked:
+            mocked.get(url, exception=aiohttp.ClientConnectionError("Connection reset"))
+            mocked.get(url, payload=[])
+
+            appliances = await client.get_appliances()
+            assert appliances == []
+            assert len(mocked.requests[("GET", URL(url))]) == 2
+
+
+@pytest.mark.asyncio
+async def test_request_html_proxy_error_fallback():
+    """Verify that non-JSON proxy error pages fall back to response text instead of raising decode errors."""
+    mock_token_manager = MagicMock()
+    mock_token_manager.get_auth_data = AsyncMock(
+        return_value=AuthData(
+            access_token="mock_token", refresh_token="mock_refresh", api_key="mock_key"
+        )
+    )
+    client = ApplianceClient(mock_token_manager)
+    url = "https://api.developer.electrolux.one/api/v1/appliances"
+
+    with patch("asyncio.sleep", new_callable=AsyncMock):
+        with aioresponses() as mocked:
+            mocked.get(
+                url,
+                status=500,
+                body="<html><head><title>500 Internal Server Error</title></head></html>",
+                content_type="text/html",
+            )
+
+            with pytest.raises(ApplianceClientException) as exc_info:
+                await client.get_appliances()
+
+            assert "500 Internal Server Error" in str(exc_info.value)
+
+
+@pytest.mark.asyncio
+async def test_request_respects_retry_after_header():
+    """Verify that request respects the Retry-After header on 429 status code."""
+    mock_token_manager = MagicMock()
+    mock_token_manager.get_auth_data = AsyncMock(
+        return_value=AuthData(
+            access_token="mock_token", refresh_token="mock_refresh", api_key="mock_key"
+        )
+    )
+    client = ApplianceClient(mock_token_manager)
+    url = "https://api.developer.electrolux.one/api/v1/appliances"
+
+    sleep_calls = []
+
+    async def fake_sleep(duration):
+        sleep_calls.append(duration)
+
+    with patch("asyncio.sleep", side_effect=fake_sleep):
+        with aioresponses() as mocked:
+            mocked.get(url, status=429, headers={"Retry-After": "12"})
+            mocked.get(url, payload=[])
+
+            appliances = await client.get_appliances()
+            assert appliances == []
+            retry_sleeps = [s for s in sleep_calls if s >= 12.0]
+            assert len(retry_sleeps) == 1
+
+
+@pytest.mark.asyncio
+async def test_request_html_proxy_error_truncation():
+    """Verify that non-JSON proxy error pages exceeding 2KB are truncated to prevent memory bloat."""
+    mock_token_manager = MagicMock()
+    mock_token_manager.get_auth_data = AsyncMock(
+        return_value=AuthData(
+            access_token="mock_token", refresh_token="mock_refresh", api_key="mock_key"
+        )
+    )
+    client = ApplianceClient(mock_token_manager)
+    url = "https://api.developer.electrolux.one/api/v1/appliances"
+
+    huge_body = "x" * 10000
+
+    with patch("asyncio.sleep", new_callable=AsyncMock):
+        with aioresponses() as mocked:
+            mocked.get(
+                url,
+                status=500,
+                body=huge_body,
+                content_type="text/html",
+            )
+
+            with pytest.raises(ApplianceClientException) as exc_info:
+                await client.get_appliances()
+
+            # Exception message should not contain all 10,000 characters
+            assert len(str(exc_info.value)) < 3000

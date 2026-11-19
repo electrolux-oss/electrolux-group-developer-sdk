@@ -100,7 +100,12 @@ class ApplianceClient:
         _token_manager (TokenManager)
     """
 
-    def __init__(self, token_manager: TokenManager, external_user_agent: Optional[str] = None):
+    def __init__(
+        self,
+        token_manager: TokenManager,
+        external_user_agent: Optional[str] = None,
+        session: Optional[aiohttp.ClientSession] = None,
+    ):
         """
         Initialize the ApplianceClient.
 
@@ -110,10 +115,13 @@ class ApplianceClient:
                 to the SDK's default User-Agent header when making the request. This allows
                 external applications to identify themselves in API calls. If not provided,
                 only the SDK's default user agent is used.
+            session (aiohttp.ClientSession, optional): An optional external ClientSession
+                to reuse for HTTP requests. If not provided, temporary sessions are created.
         """
         self._token_manager = token_manager
         self._sse_listeners: dict[str, list[Callable[[dict[str, Any]], None]]] = {}
         self._external_user_agent = external_user_agent
+        self._session = session
 
     async def test_connection(self) -> None:
         try:
@@ -571,7 +579,11 @@ class ApplianceClient:
         }
 
         return await request(
-            method=method, url=url, headers=headers, json_body=json_body
+            method=method,
+            url=url,
+            headers=headers,
+            json_body=json_body,
+            session=self._session,
         )
 
 def apply_sse_update(state: ApplianceState, event: dict[str, Any]) -> ApplianceState:
